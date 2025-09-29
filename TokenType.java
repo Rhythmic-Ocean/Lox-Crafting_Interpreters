@@ -1,9 +1,9 @@
 package com.craftinginterpreters.lox;
 
-enum TokenType{
+public enum TokenType{
 
   //one character token, if u seen them, u don't need to see anything else to confirm what they are
-  LEFT_PAREN,
+  LEFT_PAREN, //each of them are implicitly public static final that's why there's an static import in Parser.java
   RIGHT_PAREN,
   LEFT_BRACE,
   RIGHT_BRACE,
