@@ -9,7 +9,9 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class Lox{
+    public static final Interpreter interpreter = new Interpreter();
     static boolean hadError = false;
+    static boolean hadRuntimeError = false;
     public static void main(String[] args) throws IOException{
         if (args.length > 1){
             System.out.println("Usage jlox: [Script]");
@@ -29,6 +31,7 @@ public class Lox{
         byte[] bytes = Files.readAllBytes(Paths.get(str));
         run(new String(bytes, Charset.defaultCharset()));
         if (hadError) System.exit(65);
+        if (hadRuntimeError) System.exit(70);
     }
 
     //for repl process, takes console input in and systematically sends it to run() for further provessing
@@ -51,15 +54,14 @@ public class Lox{
         Scanner scan = new Scanner(source);
         List<Token> tokens = scan.scanTokens();
         Parser parser = new Parser(tokens);
-        Expr expression = parser.parse();
+        List<Stmt> statements = parser.parse();
 
         if (hadError) return;
 
-        System.out.println("" + new AstPrinter().print(expression));
-
-        for(Token tok : tokens){
-            System.out.println(tok);
-        }
+        interpreter.interpret(statements);
+        //for(Token tok : tokens){ //deprecated
+            //System.out.println(tok);
+        //}
     }
 
     //tiny bit of error handling, give line and error msg and it calls report for you
@@ -68,6 +70,10 @@ public class Lox{
         report(line, "", message);
     }
 
+    static void runtimeError(RuntimeError error){
+        System.err.println(error.getMessage() + "\n[line "+ error.token.line + "]");
+        hadRuntimeError = true;
+    }
     //
     private static void report(int line, String where, String message){
         System.err.println( "[line: " + line + "] Error " + where + ": "+ message);

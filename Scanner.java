@@ -93,23 +93,26 @@ public class Scanner{
   private void scanToken(){
     char c = advance();//returns the current char and THEN increments
     switch (c){
+      //very unique, just scan one char and can be exactly categorized to what it is!
       case '(' ->addToken(LEFT_PAREN);
       case ')' ->addToken(RIGHT_PAREN) ;
       case '{' ->addToken(LEFT_BRACE);
       case '}' ->addToken(RIGHT_BRACE); 
-      case ',' ->addToken(DOT); 
-      case '.' ->addToken(MINUS); 
+      case '.' ->addToken(DOT); 
+      case '-' ->addToken(MINUS); 
       case '+' ->addToken(PLUS); 
       case ';' ->addToken(SEMICOLON); 
       case '*' ->addToken(STAR); //we don't have / cuz // means comment so we need to take care of it later
       
-
+      //need to go thru at least 2 chars to determine what it exactly means. eg for ! we have to check if there's = right after or not!!
+      //NOTE: lox does not support ! = cuz space will be a char too!
       case '!' -> addToken(match('=') ? BANG_EQUAL: BANG);
       case '=' -> addToken(match('=') ? EQUAL_EQUAL : EQUAL);
       case '<' -> addToken(match('=') ? LESS_EQUAL: LESS);
       case '>' -> addToken(match('=') ? GREATER_EQUAL: GREATER);
 
 
+      //we need to be careful about / or // and the latter is for comments
       case '/' -> {
                     if(match('/')){
                       while (peek() != '\n' &&  !isAtEnd()) advance();
@@ -119,6 +122,7 @@ public class Scanner{
                       else addToken(SLASH);
                 }
 
+      //these we just ignore!!
       case ' ' -> {}
       case '\r'-> {}
       case '\t' -> {}
@@ -127,8 +131,10 @@ public class Scanner{
       }
       //for string
 
+      //start of a string
       case '"' -> string();
 
+      //for digits, reserved words and vars
       default -> {
         //for digits
           if (isDigit(c)){
@@ -139,6 +145,7 @@ public class Scanner{
             identifier();
           }
           else{
+            //if None of the string is recognized, throw error!!
             Lox.error(line, "Unexpected character. ");
           }
        } //we move forward despite the error cuz we don't wannna have the user deal with this problem just to have another one crop up!
@@ -184,13 +191,13 @@ public boolean isAlphaNumeric(char c){
 }
 
   private void string(){
-    while (peek() != '"' && !isAtEnd()){
+    while (peek() != '"' && !isAtEnd()){//both cannot happen at the same time, if the loop ends due to isAtEnd() the error "Unterminated String" is thrown
       if (peek() == '\n'){ //allows multi line strings
         line ++;
       }
       advance();
     }
-    if (isAtEnd()){
+    if (isAtEnd()){//only if the above loop ends due to isAtEnd trigger
       Lox.error(line, "Unterminated string");
       return;
     }
@@ -209,7 +216,10 @@ public boolean isAlphaNumeric(char c){
   }
 
   private boolean isDigit(char c){
-    if (c >= '0' && c <= '9') return true;
+    if (c >= '0' && c <= '9'){
+      return true;
+    }
+
     return  false;
   }
 
