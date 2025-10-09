@@ -31,8 +31,7 @@ javac com/craftinginterpreters/lox/*.java
 # Run
 java com.craftinginterpreters.lox.Lox
 ```
-
-##Example Program
+## Example Program
 ```bash
 fun greet(name) {
   print "Hello, " + name + "!";
