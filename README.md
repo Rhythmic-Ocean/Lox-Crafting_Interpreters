@@ -13,7 +13,7 @@ Lox is a dynamically typed scripting language with lexical scoping, functions, a
 
 ---
 
-## How to Run with a lox file
+## How to Run with a lox file:
 
 ```bash
 # Compile
@@ -31,7 +31,7 @@ javac com/craftinginterpreters/lox/*.java
 # Run
 java com.craftinginterpreters.lox.Lox
 ```
-## Example Program
+## Example Program:
 ```bash
 fun greet(name) {
   print "Hello, " + name + "!";
