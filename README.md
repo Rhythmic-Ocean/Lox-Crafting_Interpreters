@@ -29,7 +29,7 @@ java com.craftinginterpreters.lox.Lox <lox_file>
 javac com/craftinginterpreters/lox/*.java
 
 # Run
-java com.craftinginterpreters.lox.Lox <lox_file>
+java com.craftinginterpreters.lox.Lox
 ```
 
 ##Example Program
