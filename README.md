@@ -7,7 +7,7 @@ Lox is a dynamically typed scripting language with lexical scoping, functions, a
 
 ## Features
 - Full AST parser and interpreter
-- Support for variables, control flow, and functions
+- Support for variables, control flow, and functions (WIP for classes)
 - Native `clock()` function implemented in Java
 - Clear error reporting and REPL mode
 
