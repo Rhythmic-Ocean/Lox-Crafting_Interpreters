@@ -1,10 +1,36 @@
 package com.craftinginterpreters.lox;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void>{
 
-  private Environment environment = new Environment();//sotred it directly in interpreter so thatthe vars stay in mem as long as the interpreter is still running
+  final Environment globals = new Environment();
+  private Environment environment = globals; //the outermost stuff will be sotred here for now.
+
+
+  //note: gloal represents the outermost env while environment represents the cureent env, the latter's value changes while the formal's doesnt'
+
+  Interpreter() {
+    globals.define("clock", new LoxCallable() {
+      @Override
+      public int arity(){
+        return 0;
+      }
+
+      @Override
+      public Object call(Interpreter interpreter, List<Object> arguments){
+        return (double)System.currentTimeMillis()/1000.0;
+      }
+
+      @Override
+      public String toString(){
+        return "<native fn>";
+      }
+    });
+  }
+
+  
 
   void interpret(List<Stmt> statements){//for list of statements
       try {
@@ -55,6 +81,13 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void>{
   }
 
   @Override
+  public Void visitFunctionStmt(Stmt.Function stmt){//THIS is function decleration. 
+    LoxFunction function = new LoxFunction(stmt, environment);
+    environment.define(stmt.name.lexeme, function);
+    return null;
+  }
+
+  @Override
   public Void visitIfStmt(Stmt.If stmt){
     if(isTruthy(evaluate(stmt.condition))){
       execute(stmt.thenBranch);
@@ -69,6 +102,14 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void>{
       Object value = evaluate(stmt.expression);
       System.out.println(stringify(value));
       return null;
+  }
+
+  @Override
+  public Void visitReturnStmt(Stmt.Return stmt){
+    Object value = null;
+    if(stmt.value != null) value = evaluate(stmt.value);
+
+    throw new Return(value);
   }
 
 
@@ -200,6 +241,26 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void>{
     // Unreachable.
     return null;
   }
+
+  @Override
+  public Object visitCallExpr(Expr.Call expr){
+    Object callee = evaluate(expr.callee);
+
+    List<Object> arguments = new ArrayList<>();
+    for(Expr argument : expr.arguments){
+      arguments.add(evaluate(argument));
+    }
+
+    if(!(callee instanceof LoxCallable)){
+      throw new RuntimeError(expr.paren, "Can only call functions and classes.");
+    }
+    LoxCallable function = (LoxCallable)callee;//if we don't implement this interface on the potential calls callee can belong to, it's gonna throw java.lang.ClassCastException
+    if(arguments.size() != function.arity()){
+      throw new RuntimeError(expr.paren, "Expected " + function.arity() + " argument but got " + arguments.size() + ".");
+    }
+    return function.call(this, arguments);
+  }
+
 
   private boolean isEqual(Object a, Object b) {
     if (a == null && b == null) return true;

@@ -22,6 +22,25 @@ NOTE: () is the actual function caller!!
 */
 
 
+/*
+ declaration -> funDecl | varDecl | statement;
+ funDecl -> "fun" function;
+ function -> IDENTIFIER "(" parameters?")" block;
+ */
+
+ /*
+  statement      → exprStmt
+               | forStmt
+               | ifStmt
+               | printStmt
+               | returnStmt
+               | whileStmt
+               | block ;
+    
+    returnStmt -> "return" expression? ";";
+
+  */
+
 import static com.craftinginterpreters.lox.TokenType.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,6 +67,7 @@ class Parser{
 
     private Stmt declaration(){
         try {
+            if(match(FUN)) return function("function");
             if(match(VAR)) return varDeclaration();//match also moved the position of current one step forward
 
             return statement();
@@ -61,6 +81,7 @@ class Parser{
         if (match(FOR)) return forStatement();
         if (match(IF)) return ifStatement();
         if (match(PRINT)) return printStatement();
+        if (match(RETURN)) return returnStatement();
         if (match(WHILE)) return whileStatement();
         if (match(LEFT_BRACE)) return new Stmt.Block(block());
 
@@ -131,6 +152,16 @@ class Parser{
         return new Stmt.Print(value);
     }
 
+    private Stmt returnStatement(){
+        Token keyword = previous();
+        Expr value = null;
+        if(!check(SEMICOLON)){
+            value = expression();
+        }
+        consume(SEMICOLON, "Expect ';' after return value");
+        return new Stmt.Return(keyword, value);
+    }
+
     private Stmt whileStatement(){
         consume(LEFT_PAREN, "Expect '(' after 'while'");
         Expr condition = expression();
@@ -146,7 +177,26 @@ class Parser{
         return new Stmt.Expression(expr);
     }
 
-    private List<Stmt> block(){
+    private Stmt.Function function(String kind){
+        Token name = consume(IDENTIFIER, "Expect " + kind + " name."); //kind is for later method's error message
+        consume(LEFT_PAREN, "Expect '(' after " + kind +" name.");
+        List <Token> parameters = new ArrayList<>();
+        if(!check(RIGHT_PAREN)){//handles the zero parameter case
+            do { 
+                if(parameters.size() >= 255){
+                    error(peek(), "Can't have more than 255 parameters.");
+                }
+                parameters.add(consume(IDENTIFIER, "Expect parameter name."));
+            } while (match(COMMA));
+        }
+        consume(RIGHT_PAREN, "Expect ')' after parameters.");
+
+        consume(LEFT_BRACE, "Expect '{' before " + kind + " body.");
+        List<Stmt> body = block();
+        return new Stmt.Function(name,parameters, body);
+    }
+
+    private List<Stmt> block(){//note that the left paren is already consumed before this gets executed.
         List<Stmt> statements = new ArrayList<>();
 
         while(!check (RIGHT_BRACE) && !isAtEnd()){
@@ -264,7 +314,35 @@ class Parser{
             Expr right = unary();
             return new Expr.Unary(operator, right);
         }
-        return primary();
+        return call();
+    }
+
+    private Expr call(){
+        Expr expr = primary();//will most likely be an identifier?
+
+        while(true){
+            if(match(LEFT_PAREN)){//checks for () if it matches, it's a function call!
+                expr = finishCall(expr);
+            }else{
+                break;
+            }
+        }
+        return expr;
+    }
+
+    private Expr finishCall(Expr callee){
+        List<Expr> arguments = new ArrayList<>();
+        if(!check(RIGHT_PAREN)){
+            do { 
+                if (arguments.size() >= 255){
+                    error(peek(), "Can't have more than 255 arguments.");
+                }
+                arguments.add(expression());
+            } while (match(COMMA));
+        }
+        Token paren = consume(RIGHT_PAREN, "Expect ')' after arguments.");
+
+        return new Expr.Call(callee, paren, arguments);
     }
 
     private Expr primary(){

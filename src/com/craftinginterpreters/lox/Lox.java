@@ -57,7 +57,8 @@ public class Lox{
         List<Stmt> statements = parser.parse();
 
 
-        if (hadError) return;
+        if (hadError) return;//if any errors from parser, it's not interpreted, just the error is directly reported.
+        //but since this only executes after parser is done, it reports as many errors as possible
 
         interpreter.interpret(statements);
         //for(Stmt statement: statements){ //deprecated
@@ -76,10 +77,6 @@ public class Lox{
         hadRuntimeError = true;
     }
     //
-    private static void report(int line, String where, String message){
-        System.err.println( "[line: " + line + "] Error " + where + ": "+ message);
-        hadError = true;
-    }
 
     static void error (Token token, String message){
         if (token.type == TokenType.EOF){
@@ -89,4 +86,8 @@ public class Lox{
         }
     }
 
+    private static void report(int line, String where, String message){
+        System.err.println( "[line: " + line + "] Error " + where + ": "+ message);
+        hadError = true;
+    }
 }
