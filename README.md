@@ -1,5 +1,5 @@
 # Lox Bytecode VM Interpreter - clox (C)(IN_PROGRESS)
-# Lox Interpreter - jlox (Java)(COMPLETED)
+# Lox Interpreter - jlox (Java)(COMPLETED - JAVADOCS IN PROGRESS)
 
 My implementation of the [Crafting Interpreters](https://craftinginterpreters.com) tree-walk interpreter written in Java.  
 Lox is a dynamically typed scripting language with lexical scoping, functions, and classes.
