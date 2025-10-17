@@ -56,6 +56,10 @@ public class Lox{
         Parser parser = new Parser(tokens);
         List<Stmt> statements = parser.parse();
 
+        if (hadError) return;
+        
+        Resolver resolver = new Resolver(interpreter);
+        resolver.resolve(statements);
 
         if (hadError) return;//if any errors from parser, it's not interpreted, just the error is directly reported.
         //but since this only executes after parser is done, it reports as many errors as possible
