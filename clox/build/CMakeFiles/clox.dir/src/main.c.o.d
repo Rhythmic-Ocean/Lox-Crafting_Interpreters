@@ -1,0 +1,21 @@
+CMakeFiles/clox.dir/src/main.c.o: \
+ /home/rhythmic_ocean/Desktop/lox/clox/src/main.c \
+ /usr/include/stdc-predef.h \
+ /home/rhythmic_ocean/Desktop/lox/clox/include/common.h \
+ /usr/lib/gcc/x86_64-redhat-linux/15/include/stdbool.h \
+ /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
+ /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h \
+ /usr/include/stdint.h /usr/include/bits/libc-header-start.h \
+ /usr/include/features.h /usr/include/features-time64.h \
+ /usr/include/bits/wordsize.h /usr/include/bits/timesize.h \
+ /usr/include/sys/cdefs.h /usr/include/bits/long-double.h \
+ /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
+ /usr/include/bits/types.h /usr/include/bits/typesizes.h \
+ /usr/include/bits/time64.h /usr/include/bits/wchar.h \
+ /usr/include/bits/stdint-intn.h /usr/include/bits/stdint-uintn.h \
+ /usr/include/bits/stdint-least.h \
+ /home/rhythmic_ocean/Desktop/lox/clox/include/chunk.h \
+ /home/rhythmic_ocean/Desktop/lox/clox/include/common.h \
+ /home/rhythmic_ocean/Desktop/lox/clox/include/value.h \
+ /home/rhythmic_ocean/Desktop/lox/clox/include/debug.h \
+ /home/rhythmic_ocean/Desktop/lox/clox/include/chunk.h

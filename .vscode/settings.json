@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "charconv": "c",
+        "chrono": "c",
+        "expected": "c",
+        "optional": "c",
+        "format": "c",
+        "ranges": "c",
+        "ratio": "c",
+        "system_error": "c",
+        "array": "c",
+        "functional": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "utility": "c"
+    }
+}

@@ -1,0 +1,1 @@
+/usr/bin/cc -g -fsanitize=address -Wl,--dependency-file=CMakeFiles/clox.dir/link.d CMakeFiles/clox.dir/src/chunk.c.o CMakeFiles/clox.dir/src/debug.c.o CMakeFiles/clox.dir/src/main.c.o CMakeFiles/clox.dir/src/memory.c.o CMakeFiles/clox.dir/src/value.c.o -o clox

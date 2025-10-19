@@ -1,0 +1,3 @@
+/home/rhythmic_ocean/Desktop/lox/clox/build/CMakeFiles/clox.dir
+/home/rhythmic_ocean/Desktop/lox/clox/build/CMakeFiles/edit_cache.dir
+/home/rhythmic_ocean/Desktop/lox/clox/build/CMakeFiles/rebuild_cache.dir
