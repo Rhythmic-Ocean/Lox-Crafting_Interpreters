@@ -6,6 +6,7 @@ CMakeFiles/clox.dir/src/chunk.c.o: /home/rhythmic_ocean/Desktop/lox/clox/src/chu
   /home/rhythmic_ocean/Desktop/lox/clox/include/common.h \
   /home/rhythmic_ocean/Desktop/lox/clox/include/memory.h \
   /home/rhythmic_ocean/Desktop/lox/clox/include/value.h \
+  /home/rhythmic_ocean/Desktop/lox/clox/include/vm.h \
   /usr/include/alloca.h \
   /usr/include/bits/atomic_wide_counter.h \
   /usr/include/bits/byteswap.h \
@@ -21,6 +22,7 @@ CMakeFiles/clox.dir/src/chunk.c.o: /home/rhythmic_ocean/Desktop/lox/clox/src/chu
   /usr/include/bits/stdint-intn.h \
   /usr/include/bits/stdint-least.h \
   /usr/include/bits/stdint-uintn.h \
+  /usr/include/bits/stdio_lim.h \
   /usr/include/bits/stdlib-float.h \
   /usr/include/bits/struct_mutex.h \
   /usr/include/bits/struct_rwlock.h \
@@ -28,10 +30,17 @@ CMakeFiles/clox.dir/src/chunk.c.o: /home/rhythmic_ocean/Desktop/lox/clox/src/chu
   /usr/include/bits/time64.h \
   /usr/include/bits/timesize.h \
   /usr/include/bits/types.h \
+  /usr/include/bits/types/FILE.h \
+  /usr/include/bits/types/__FILE.h \
+  /usr/include/bits/types/__fpos64_t.h \
+  /usr/include/bits/types/__fpos_t.h \
+  /usr/include/bits/types/__mbstate_t.h \
   /usr/include/bits/types/__sigset_t.h \
   /usr/include/bits/types/clock_t.h \
   /usr/include/bits/types/clockid_t.h \
+  /usr/include/bits/types/cookie_io_functions_t.h \
   /usr/include/bits/types/sigset_t.h \
+  /usr/include/bits/types/struct_FILE.h \
   /usr/include/bits/types/struct_timespec.h \
   /usr/include/bits/types/struct_timeval.h \
   /usr/include/bits/types/time_t.h \
@@ -49,10 +58,81 @@ CMakeFiles/clox.dir/src/chunk.c.o: /home/rhythmic_ocean/Desktop/lox/clox/src/chu
   /usr/include/gnu/stubs.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdint.h \
+  /usr/include/stdio.h \
   /usr/include/stdlib.h \
   /usr/include/sys/cdefs.h \
   /usr/include/sys/select.h \
   /usr/include/sys/types.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdarg.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdbool.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h
+
+CMakeFiles/clox.dir/src/compiler.c.o: /home/rhythmic_ocean/Desktop/lox/clox/src/compiler.c \
+  /home/rhythmic_ocean/Desktop/lox/clox/include/chunk.h \
+  /home/rhythmic_ocean/Desktop/lox/clox/include/common.h \
+  /home/rhythmic_ocean/Desktop/lox/clox/include/compiler.h \
+  /home/rhythmic_ocean/Desktop/lox/clox/include/debug.h \
+  /home/rhythmic_ocean/Desktop/lox/clox/include/scanner.h \
+  /home/rhythmic_ocean/Desktop/lox/clox/include/value.h \
+  /home/rhythmic_ocean/Desktop/lox/clox/include/vm.h \
+  /usr/include/alloca.h \
+  /usr/include/bits/atomic_wide_counter.h \
+  /usr/include/bits/byteswap.h \
+  /usr/include/bits/endian.h \
+  /usr/include/bits/endianness.h \
+  /usr/include/bits/floatn-common.h \
+  /usr/include/bits/floatn.h \
+  /usr/include/bits/libc-header-start.h \
+  /usr/include/bits/long-double.h \
+  /usr/include/bits/pthreadtypes-arch.h \
+  /usr/include/bits/pthreadtypes.h \
+  /usr/include/bits/select.h \
+  /usr/include/bits/stdint-intn.h \
+  /usr/include/bits/stdint-least.h \
+  /usr/include/bits/stdint-uintn.h \
+  /usr/include/bits/stdio_lim.h \
+  /usr/include/bits/stdlib-float.h \
+  /usr/include/bits/struct_mutex.h \
+  /usr/include/bits/struct_rwlock.h \
+  /usr/include/bits/thread-shared-types.h \
+  /usr/include/bits/time64.h \
+  /usr/include/bits/timesize.h \
+  /usr/include/bits/types.h \
+  /usr/include/bits/types/FILE.h \
+  /usr/include/bits/types/__FILE.h \
+  /usr/include/bits/types/__fpos64_t.h \
+  /usr/include/bits/types/__fpos_t.h \
+  /usr/include/bits/types/__mbstate_t.h \
+  /usr/include/bits/types/__sigset_t.h \
+  /usr/include/bits/types/clock_t.h \
+  /usr/include/bits/types/clockid_t.h \
+  /usr/include/bits/types/cookie_io_functions_t.h \
+  /usr/include/bits/types/sigset_t.h \
+  /usr/include/bits/types/struct_FILE.h \
+  /usr/include/bits/types/struct_timespec.h \
+  /usr/include/bits/types/struct_timeval.h \
+  /usr/include/bits/types/time_t.h \
+  /usr/include/bits/types/timer_t.h \
+  /usr/include/bits/typesizes.h \
+  /usr/include/bits/uintn-identity.h \
+  /usr/include/bits/waitflags.h \
+  /usr/include/bits/waitstatus.h \
+  /usr/include/bits/wchar.h \
+  /usr/include/bits/wordsize.h \
+  /usr/include/endian.h \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/gnu/stubs-64.h \
+  /usr/include/gnu/stubs.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/stdio.h \
+  /usr/include/stdlib.h \
+  /usr/include/sys/cdefs.h \
+  /usr/include/sys/select.h \
+  /usr/include/sys/types.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdarg.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stdbool.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h
@@ -101,24 +181,68 @@ CMakeFiles/clox.dir/src/main.c.o: /home/rhythmic_ocean/Desktop/lox/clox/src/main
   /home/rhythmic_ocean/Desktop/lox/clox/include/common.h \
   /home/rhythmic_ocean/Desktop/lox/clox/include/debug.h \
   /home/rhythmic_ocean/Desktop/lox/clox/include/value.h \
+  /home/rhythmic_ocean/Desktop/lox/clox/include/vm.h \
+  /usr/include/alloca.h \
+  /usr/include/bits/atomic_wide_counter.h \
+  /usr/include/bits/byteswap.h \
+  /usr/include/bits/endian.h \
+  /usr/include/bits/endianness.h \
+  /usr/include/bits/floatn-common.h \
+  /usr/include/bits/floatn.h \
   /usr/include/bits/libc-header-start.h \
   /usr/include/bits/long-double.h \
+  /usr/include/bits/pthreadtypes-arch.h \
+  /usr/include/bits/pthreadtypes.h \
+  /usr/include/bits/select.h \
   /usr/include/bits/stdint-intn.h \
   /usr/include/bits/stdint-least.h \
   /usr/include/bits/stdint-uintn.h \
+  /usr/include/bits/stdio_lim.h \
+  /usr/include/bits/stdlib-float.h \
+  /usr/include/bits/struct_mutex.h \
+  /usr/include/bits/struct_rwlock.h \
+  /usr/include/bits/thread-shared-types.h \
   /usr/include/bits/time64.h \
   /usr/include/bits/timesize.h \
   /usr/include/bits/types.h \
+  /usr/include/bits/types/FILE.h \
+  /usr/include/bits/types/__FILE.h \
+  /usr/include/bits/types/__fpos64_t.h \
+  /usr/include/bits/types/__fpos_t.h \
+  /usr/include/bits/types/__locale_t.h \
+  /usr/include/bits/types/__mbstate_t.h \
+  /usr/include/bits/types/__sigset_t.h \
+  /usr/include/bits/types/clock_t.h \
+  /usr/include/bits/types/clockid_t.h \
+  /usr/include/bits/types/cookie_io_functions_t.h \
+  /usr/include/bits/types/locale_t.h \
+  /usr/include/bits/types/sigset_t.h \
+  /usr/include/bits/types/struct_FILE.h \
+  /usr/include/bits/types/struct_timespec.h \
+  /usr/include/bits/types/struct_timeval.h \
+  /usr/include/bits/types/time_t.h \
+  /usr/include/bits/types/timer_t.h \
   /usr/include/bits/typesizes.h \
+  /usr/include/bits/uintn-identity.h \
+  /usr/include/bits/waitflags.h \
+  /usr/include/bits/waitstatus.h \
   /usr/include/bits/wchar.h \
   /usr/include/bits/wordsize.h \
+  /usr/include/endian.h \
   /usr/include/features-time64.h \
   /usr/include/features.h \
   /usr/include/gnu/stubs-64.h \
   /usr/include/gnu/stubs.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdint.h \
+  /usr/include/stdio.h \
+  /usr/include/stdlib.h \
+  /usr/include/string.h \
+  /usr/include/strings.h \
   /usr/include/sys/cdefs.h \
+  /usr/include/sys/select.h \
+  /usr/include/sys/types.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdarg.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stdbool.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h
@@ -177,6 +301,47 @@ CMakeFiles/clox.dir/src/memory.c.o: /home/rhythmic_ocean/Desktop/lox/clox/src/me
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h
 
+CMakeFiles/clox.dir/src/scanner.c.o: /home/rhythmic_ocean/Desktop/lox/clox/src/scanner.c \
+  /home/rhythmic_ocean/Desktop/lox/clox/include/common.h \
+  /home/rhythmic_ocean/Desktop/lox/clox/include/scanner.h \
+  /usr/include/bits/floatn-common.h \
+  /usr/include/bits/floatn.h \
+  /usr/include/bits/libc-header-start.h \
+  /usr/include/bits/long-double.h \
+  /usr/include/bits/stdint-intn.h \
+  /usr/include/bits/stdint-least.h \
+  /usr/include/bits/stdint-uintn.h \
+  /usr/include/bits/stdio_lim.h \
+  /usr/include/bits/time64.h \
+  /usr/include/bits/timesize.h \
+  /usr/include/bits/types.h \
+  /usr/include/bits/types/FILE.h \
+  /usr/include/bits/types/__FILE.h \
+  /usr/include/bits/types/__fpos64_t.h \
+  /usr/include/bits/types/__fpos_t.h \
+  /usr/include/bits/types/__locale_t.h \
+  /usr/include/bits/types/__mbstate_t.h \
+  /usr/include/bits/types/cookie_io_functions_t.h \
+  /usr/include/bits/types/locale_t.h \
+  /usr/include/bits/types/struct_FILE.h \
+  /usr/include/bits/typesizes.h \
+  /usr/include/bits/wchar.h \
+  /usr/include/bits/wordsize.h \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/gnu/stubs-64.h \
+  /usr/include/gnu/stubs.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/stdio.h \
+  /usr/include/string.h \
+  /usr/include/strings.h \
+  /usr/include/sys/cdefs.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdarg.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdbool.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h
+
 CMakeFiles/clox.dir/src/value.c.o: /home/rhythmic_ocean/Desktop/lox/clox/src/value.c \
   /home/rhythmic_ocean/Desktop/lox/clox/include/common.h \
   /home/rhythmic_ocean/Desktop/lox/clox/include/memory.h \
@@ -215,6 +380,81 @@ CMakeFiles/clox.dir/src/value.c.o: /home/rhythmic_ocean/Desktop/lox/clox/src/val
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h
 
+CMakeFiles/clox.dir/src/vm.c.o: /home/rhythmic_ocean/Desktop/lox/clox/src/vm.c \
+  /home/rhythmic_ocean/Desktop/lox/clox/include/chunk.h \
+  /home/rhythmic_ocean/Desktop/lox/clox/include/common.h \
+  /home/rhythmic_ocean/Desktop/lox/clox/include/compiler.h \
+  /home/rhythmic_ocean/Desktop/lox/clox/include/debug.h \
+  /home/rhythmic_ocean/Desktop/lox/clox/include/memory.h \
+  /home/rhythmic_ocean/Desktop/lox/clox/include/value.h \
+  /home/rhythmic_ocean/Desktop/lox/clox/include/vm.h \
+  /usr/include/alloca.h \
+  /usr/include/bits/atomic_wide_counter.h \
+  /usr/include/bits/byteswap.h \
+  /usr/include/bits/endian.h \
+  /usr/include/bits/endianness.h \
+  /usr/include/bits/floatn-common.h \
+  /usr/include/bits/floatn.h \
+  /usr/include/bits/libc-header-start.h \
+  /usr/include/bits/long-double.h \
+  /usr/include/bits/pthreadtypes-arch.h \
+  /usr/include/bits/pthreadtypes.h \
+  /usr/include/bits/select.h \
+  /usr/include/bits/stdint-intn.h \
+  /usr/include/bits/stdint-least.h \
+  /usr/include/bits/stdint-uintn.h \
+  /usr/include/bits/stdio_lim.h \
+  /usr/include/bits/stdlib-float.h \
+  /usr/include/bits/struct_mutex.h \
+  /usr/include/bits/struct_rwlock.h \
+  /usr/include/bits/thread-shared-types.h \
+  /usr/include/bits/time.h \
+  /usr/include/bits/time64.h \
+  /usr/include/bits/timesize.h \
+  /usr/include/bits/types.h \
+  /usr/include/bits/types/FILE.h \
+  /usr/include/bits/types/__FILE.h \
+  /usr/include/bits/types/__fpos64_t.h \
+  /usr/include/bits/types/__fpos_t.h \
+  /usr/include/bits/types/__locale_t.h \
+  /usr/include/bits/types/__mbstate_t.h \
+  /usr/include/bits/types/__sigset_t.h \
+  /usr/include/bits/types/clock_t.h \
+  /usr/include/bits/types/clockid_t.h \
+  /usr/include/bits/types/cookie_io_functions_t.h \
+  /usr/include/bits/types/locale_t.h \
+  /usr/include/bits/types/sigset_t.h \
+  /usr/include/bits/types/struct_FILE.h \
+  /usr/include/bits/types/struct_itimerspec.h \
+  /usr/include/bits/types/struct_timespec.h \
+  /usr/include/bits/types/struct_timeval.h \
+  /usr/include/bits/types/struct_tm.h \
+  /usr/include/bits/types/time_t.h \
+  /usr/include/bits/types/timer_t.h \
+  /usr/include/bits/typesizes.h \
+  /usr/include/bits/uintn-identity.h \
+  /usr/include/bits/waitflags.h \
+  /usr/include/bits/waitstatus.h \
+  /usr/include/bits/wchar.h \
+  /usr/include/bits/wordsize.h \
+  /usr/include/endian.h \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/gnu/stubs-64.h \
+  /usr/include/gnu/stubs.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/stdio.h \
+  /usr/include/stdlib.h \
+  /usr/include/sys/cdefs.h \
+  /usr/include/sys/select.h \
+  /usr/include/sys/types.h \
+  /usr/include/time.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdarg.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdbool.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h
+
 clox: /lib64/ld-linux-x86-64.so.2 \
   /lib64/libc.so.6 \
   /lib64/libgcc_s.so.1 \
@@ -224,20 +464,22 @@ clox: /lib64/ld-linux-x86-64.so.2 \
   /usr/lib64/libc.so \
   /usr/lib/gcc/x86_64-redhat-linux/15/crtbegin.o \
   /usr/lib/gcc/x86_64-redhat-linux/15/crtend.o \
-  /usr/lib/gcc/x86_64-redhat-linux/15/libasan.so \
-  /usr/lib/gcc/x86_64-redhat-linux/15/libasan_preinit.o \
   /usr/lib/gcc/x86_64-redhat-linux/15/libgcc.a \
   /usr/lib/gcc/x86_64-redhat-linux/15/libgcc_s.so \
-  /usr/lib64/libasan.so.8.0.0 \
   /usr/lib64/libc_nonshared.a \
-  /usr/lib64/libm.so.6 \
-  /usr/lib64/libstdc++.so.6 \
   CMakeFiles/clox.dir/src/chunk.c.o \
+  CMakeFiles/clox.dir/src/compiler.c.o \
   CMakeFiles/clox.dir/src/debug.c.o \
   CMakeFiles/clox.dir/src/main.c.o \
   CMakeFiles/clox.dir/src/memory.c.o \
-  CMakeFiles/clox.dir/src/value.c.o
+  CMakeFiles/clox.dir/src/scanner.c.o \
+  CMakeFiles/clox.dir/src/value.c.o \
+  CMakeFiles/clox.dir/src/vm.c.o
 
+
+CMakeFiles/clox.dir/src/vm.c.o:
+
+CMakeFiles/clox.dir/src/scanner.c.o:
 
 CMakeFiles/clox.dir/src/memory.c.o:
 
@@ -245,57 +487,87 @@ CMakeFiles/clox.dir/src/main.c.o:
 
 CMakeFiles/clox.dir/src/debug.c.o:
 
-/usr/lib64/libstdc++.so.6:
-
-/usr/lib64/libm.so.6:
-
 CMakeFiles/clox.dir/src/value.c.o:
 
 /usr/lib64/libc_nonshared.a:
 
 /usr/lib/gcc/x86_64-redhat-linux/15/libgcc_s.so:
 
-CMakeFiles/clox.dir/src/chunk.c.o:
-
-/usr/lib/gcc/x86_64-redhat-linux/15/libgcc.a:
-
-/usr/lib/gcc/x86_64-redhat-linux/15/libasan_preinit.o:
-
-/usr/lib/gcc/x86_64-redhat-linux/15/libasan.so:
-
-/usr/lib/gcc/x86_64-redhat-linux/15/crtend.o:
-
 /usr/lib64/crti.o:
 
 /usr/lib64/crt1.o:
 
-/lib64/libc.so.6:
-
 /lib64/ld-linux-x86-64.so.2:
+
+CMakeFiles/clox.dir/src/chunk.c.o:
+
+/usr/lib/gcc/x86_64-redhat-linux/15/libgcc.a:
+
+/usr/include/bits/time.h:
+
+/home/rhythmic_ocean/Desktop/lox/clox/src/vm.c:
+
+/home/rhythmic_ocean/Desktop/lox/clox/src/scanner.c:
 
 /home/rhythmic_ocean/Desktop/lox/clox/src/memory.c:
 
+/usr/lib/gcc/x86_64-redhat-linux/15/crtend.o:
+
+/usr/include/strings.h:
+
+/lib64/libc.so.6:
+
+/usr/include/bits/types/locale_t.h:
+
+/usr/include/bits/types/__locale_t.h:
+
 /home/rhythmic_ocean/Desktop/lox/clox/src/main.c:
+
+/lib64/libgcc_s.so.1:
+
+/home/rhythmic_ocean/Desktop/lox/clox/src/debug.c:
+
+/home/rhythmic_ocean/Desktop/lox/clox/include/scanner.h:
+
+/home/rhythmic_ocean/Desktop/lox/clox/include/debug.h:
+
+/home/rhythmic_ocean/Desktop/lox/clox/include/compiler.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/15/include/stdbool.h:
+
+/usr/include/time.h:
 
 /usr/lib/gcc/x86_64-redhat-linux/15/include/stdarg.h:
 
-/usr/include/bits/types/struct_FILE.h:
+/usr/include/bits/types/struct_itimerspec.h:
 
-/usr/include/bits/types/__mbstate_t.h:
+/usr/include/sys/types.h:
 
-/usr/include/bits/types/__fpos_t.h:
+/usr/include/sys/select.h:
 
-/usr/include/bits/types/__fpos64_t.h:
-
-/usr/include/bits/types/clock_t.h:
+/usr/include/sys/cdefs.h:
 
 /usr/include/bits/types.h:
 
 /usr/lib64/libc.so:
 
+/usr/include/string.h:
+
 /usr/include/bits/time64.h:
 
+/usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h:
+
+/usr/include/bits/byteswap.h:
+
 /usr/include/bits/thread-shared-types.h:
+
+/home/rhythmic_ocean/Desktop/lox/clox/include/vm.h:
+
+/usr/include/bits/types/struct_tm.h:
+
+/usr/include/bits/wchar.h:
 
 /usr/include/bits/stdint-least.h:
 
@@ -307,19 +579,31 @@ CMakeFiles/clox.dir/src/chunk.c.o:
 
 /usr/include/bits/struct_mutex.h:
 
+CMakeFiles/clox.dir/src/compiler.c.o:
+
 /usr/include/gnu/stubs-64.h:
 
-/usr/lib64/libasan.so.8.0.0:
+/usr/include/bits/types/__fpos64_t.h:
 
 /usr/include/features-time64.h:
+
+/home/rhythmic_ocean/Desktop/lox/clox/src/compiler.c:
 
 /home/rhythmic_ocean/Desktop/lox/clox/src/chunk.c:
 
 /usr/include/bits/long-double.h:
 
+/usr/include/bits/libc-header-start.h:
+
 /usr/include/bits/select.h:
 
 /home/rhythmic_ocean/Desktop/lox/clox/include/chunk.h:
+
+/usr/include/bits/pthreadtypes-arch.h:
+
+/usr/include/stdc-predef.h:
+
+/home/rhythmic_ocean/Desktop/lox/clox/include/value.h:
 
 /home/rhythmic_ocean/Desktop/lox/clox/include/memory.h:
 
@@ -329,45 +613,15 @@ CMakeFiles/clox.dir/src/chunk.c.o:
 
 /usr/include/stdlib.h:
 
-/usr/include/bits/libc-header-start.h:
-
-/usr/include/bits/pthreadtypes-arch.h:
-
-/usr/include/stdc-predef.h:
-
-/usr/include/sys/cdefs.h:
-
-/home/rhythmic_ocean/Desktop/lox/clox/include/value.h:
-
-/usr/include/stdio.h:
-
-/usr/include/bits/types/timer_t.h:
-
-/usr/include/bits/types/cookie_io_functions_t.h:
-
-/usr/include/bits/stdint-uintn.h:
-
-/usr/include/endian.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/15/include/stdbool.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h:
-
-/usr/include/bits/types/__sigset_t.h:
-
 /usr/include/bits/timesize.h:
 
 /usr/include/bits/endian.h:
 
+/usr/include/bits/types/__sigset_t.h:
+
 /usr/include/bits/waitflags.h:
 
 /usr/include/bits/endianness.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/15/crtbegin.o:
-
-/usr/include/bits/types/__FILE.h:
-
-/usr/include/bits/stdlib-float.h:
 
 /usr/include/bits/types/sigset_t.h:
 
@@ -379,33 +633,47 @@ CMakeFiles/clox.dir/src/chunk.c.o:
 
 /usr/include/bits/floatn.h:
 
+/usr/include/bits/types/FILE.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/15/crtbegin.o:
+
+/usr/include/bits/stdlib-float.h:
+
+/usr/include/bits/types/__FILE.h:
+
+/usr/include/bits/types/__fpos_t.h:
+
+/usr/include/bits/wordsize.h:
+
+/usr/include/bits/types/__mbstate_t.h:
+
+/usr/include/bits/types/clock_t.h:
+
 /usr/lib64/crtn.o:
 
 /usr/include/bits/atomic_wide_counter.h:
 
 /usr/include/bits/types/clockid_t.h:
 
-/usr/include/bits/types/struct_timespec.h:
+/usr/include/bits/stdint-uintn.h:
 
-/usr/include/bits/byteswap.h:
+/usr/include/endian.h:
 
-/usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h:
-
-/home/rhythmic_ocean/Desktop/lox/clox/include/debug.h:
-
-/usr/include/bits/typesizes.h:
+/usr/include/bits/types/cookie_io_functions_t.h:
 
 /usr/include/bits/uintn-identity.h:
 
-/usr/include/bits/wordsize.h:
+/usr/include/bits/typesizes.h:
 
-/usr/include/bits/waitstatus.h:
+/usr/include/bits/types/struct_FILE.h:
 
-/usr/include/bits/wchar.h:
+/usr/include/bits/types/struct_timespec.h:
+
+/usr/include/bits/stdio_lim.h:
 
 /usr/include/bits/types/struct_timeval.h:
 
-/usr/include/bits/stdio_lim.h:
+/usr/include/bits/waitstatus.h:
 
 /usr/include/features.h:
 
@@ -413,12 +681,6 @@ CMakeFiles/clox.dir/src/chunk.c.o:
 
 /usr/include/stdint.h:
 
-/usr/include/sys/select.h:
+/usr/include/bits/types/timer_t.h:
 
-/usr/include/sys/types.h:
-
-/lib64/libgcc_s.so.1:
-
-/home/rhythmic_ocean/Desktop/lox/clox/src/debug.c:
-
-/usr/include/bits/types/FILE.h:
+/usr/include/stdio.h:

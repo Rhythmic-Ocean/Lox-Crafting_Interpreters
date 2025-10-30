@@ -6,6 +6,12 @@
 
 typedef enum{
     OP_CONSTANT,
+    OP_ADD,
+    OP_SUBTRACT,
+    OP_MULTIPLY,
+    OP_DIVIDE,
+    OP_NEGATE,
+    OP_CONSTANT_LONG,
     OP_RETURN,//would late mean return from current function
 } OpCode;
 //when no value given to any elements in enum, all are assigned int constants

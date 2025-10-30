@@ -13,5 +13,6 @@
         "tuple": "c",
         "type_traits": "c",
         "utility": "c"
-    }
+    },
+    "cmake.sourceDirectory": "/home/rhythmic_ocean/Desktop/lox/clox"
 }

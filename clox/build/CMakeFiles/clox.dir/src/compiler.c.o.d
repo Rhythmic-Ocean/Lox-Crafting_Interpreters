@@ -1,5 +1,5 @@
-CMakeFiles/clox.dir/src/main.c.o: \
- /home/rhythmic_ocean/Desktop/lox/clox/src/main.c \
+CMakeFiles/clox.dir/src/compiler.c.o: \
+ /home/rhythmic_ocean/Desktop/lox/clox/src/compiler.c \
  /usr/include/stdc-predef.h /usr/include/stdio.h \
  /usr/include/bits/libc-header-start.h /usr/include/features.h \
  /usr/include/features-time64.h /usr/include/bits/wordsize.h \
@@ -31,17 +31,16 @@ CMakeFiles/clox.dir/src/main.c.o: \
  /usr/include/bits/pthreadtypes-arch.h \
  /usr/include/bits/atomic_wide_counter.h /usr/include/bits/struct_mutex.h \
  /usr/include/bits/struct_rwlock.h /usr/include/alloca.h \
- /usr/include/bits/stdlib-float.h /usr/include/string.h \
- /usr/include/bits/types/locale_t.h /usr/include/bits/types/__locale_t.h \
- /usr/include/strings.h \
+ /usr/include/bits/stdlib-float.h \
  /home/rhythmic_ocean/Desktop/lox/clox/include/common.h \
  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdbool.h \
  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h \
  /usr/include/stdint.h /usr/include/bits/wchar.h \
  /usr/include/bits/stdint-uintn.h /usr/include/bits/stdint-least.h \
+ /home/rhythmic_ocean/Desktop/lox/clox/include/compiler.h \
+ /home/rhythmic_ocean/Desktop/lox/clox/include/vm.h \
  /home/rhythmic_ocean/Desktop/lox/clox/include/chunk.h \
  /home/rhythmic_ocean/Desktop/lox/clox/include/common.h \
  /home/rhythmic_ocean/Desktop/lox/clox/include/value.h \
- /home/rhythmic_ocean/Desktop/lox/clox/include/debug.h \
- /home/rhythmic_ocean/Desktop/lox/clox/include/chunk.h \
- /home/rhythmic_ocean/Desktop/lox/clox/include/vm.h
+ /home/rhythmic_ocean/Desktop/lox/clox/include/scanner.h \
+ /home/rhythmic_ocean/Desktop/lox/clox/include/debug.h

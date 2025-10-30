@@ -24,7 +24,13 @@ CMakeFiles/clox.dir/src/chunk.c.o: \
  /usr/include/bits/pthreadtypes-arch.h \
  /usr/include/bits/atomic_wide_counter.h /usr/include/bits/struct_mutex.h \
  /usr/include/bits/struct_rwlock.h /usr/include/alloca.h \
- /usr/include/bits/stdlib-float.h \
+ /usr/include/bits/stdlib-float.h /usr/include/stdio.h \
+ /usr/lib/gcc/x86_64-redhat-linux/15/include/stdarg.h \
+ /usr/include/bits/types/__fpos_t.h /usr/include/bits/types/__mbstate_t.h \
+ /usr/include/bits/types/__fpos64_t.h /usr/include/bits/types/__FILE.h \
+ /usr/include/bits/types/FILE.h /usr/include/bits/types/struct_FILE.h \
+ /usr/include/bits/types/cookie_io_functions_t.h \
+ /usr/include/bits/stdio_lim.h \
  /home/rhythmic_ocean/Desktop/lox/clox/include/chunk.h \
  /home/rhythmic_ocean/Desktop/lox/clox/include/common.h \
  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdbool.h \
@@ -32,4 +38,6 @@ CMakeFiles/clox.dir/src/chunk.c.o: \
  /usr/include/stdint.h /usr/include/bits/wchar.h \
  /usr/include/bits/stdint-uintn.h /usr/include/bits/stdint-least.h \
  /home/rhythmic_ocean/Desktop/lox/clox/include/value.h \
- /home/rhythmic_ocean/Desktop/lox/clox/include/memory.h
+ /home/rhythmic_ocean/Desktop/lox/clox/include/memory.h \
+ /home/rhythmic_ocean/Desktop/lox/clox/include/vm.h \
+ /home/rhythmic_ocean/Desktop/lox/clox/include/chunk.h

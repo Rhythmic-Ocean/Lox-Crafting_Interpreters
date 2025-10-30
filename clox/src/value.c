@@ -26,5 +26,6 @@ void freeValueArray(ValueArray* array){
 }
 
 void printValue(Value value){
-    printf("%g", value);
+    printf("%g", value); //%g for printing floating point and it automatically choses %f or %e (this is scientific notation)
+    //depending on which is shorter
 }

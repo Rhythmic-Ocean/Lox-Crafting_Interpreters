@@ -6,5 +6,5 @@ C_DEFINES =
 
 C_INCLUDES = -I/home/rhythmic_ocean/Desktop/lox/clox/include
 
-C_FLAGS = -g -fsanitize=address -fno-omit-frame-pointer -g
+C_FLAGS = -g
 
