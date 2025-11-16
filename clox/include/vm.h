@@ -2,6 +2,7 @@
 #define clox_vm_h
 
 #include "chunk.h"
+#include "table.h"
 #include "value.h"
 
 #define INIT_STACK 256
@@ -13,6 +14,9 @@ typedef struct{
     int stack_size;
     int stack_count;
     Value* stack;
+    Table globals;
+    Table strings;
+    Obj* objects;//head of the obj list for garbage collection
 }VM;
 
 typedef enum{
@@ -20,6 +24,8 @@ typedef enum{
     INTERPRET_COMPILE_ERROR,
     INTERPRET_RUNTIME_ERROR,
 } InterpretResult;
+
+extern VM vm;
 
 void initVM();
 void freeVM();

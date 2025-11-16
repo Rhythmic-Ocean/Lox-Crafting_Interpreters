@@ -249,6 +249,30 @@ src/memory.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/clox.dir/build.make CMakeFiles/clox.dir/src/memory.c.s
 .PHONY : src/memory.c.s
 
+src/object.o: src/object.c.o
+.PHONY : src/object.o
+
+# target to build an object file
+src/object.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/clox.dir/build.make CMakeFiles/clox.dir/src/object.c.o
+.PHONY : src/object.c.o
+
+src/object.i: src/object.c.i
+.PHONY : src/object.i
+
+# target to preprocess a source file
+src/object.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/clox.dir/build.make CMakeFiles/clox.dir/src/object.c.i
+.PHONY : src/object.c.i
+
+src/object.s: src/object.c.s
+.PHONY : src/object.s
+
+# target to generate assembly for a file
+src/object.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/clox.dir/build.make CMakeFiles/clox.dir/src/object.c.s
+.PHONY : src/object.c.s
+
 src/scanner.o: src/scanner.c.o
 .PHONY : src/scanner.o
 
@@ -272,6 +296,30 @@ src/scanner.s: src/scanner.c.s
 src/scanner.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/clox.dir/build.make CMakeFiles/clox.dir/src/scanner.c.s
 .PHONY : src/scanner.c.s
+
+src/table.o: src/table.c.o
+.PHONY : src/table.o
+
+# target to build an object file
+src/table.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/clox.dir/build.make CMakeFiles/clox.dir/src/table.c.o
+.PHONY : src/table.c.o
+
+src/table.i: src/table.c.i
+.PHONY : src/table.i
+
+# target to preprocess a source file
+src/table.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/clox.dir/build.make CMakeFiles/clox.dir/src/table.c.i
+.PHONY : src/table.c.i
+
+src/table.s: src/table.c.s
+.PHONY : src/table.s
+
+# target to generate assembly for a file
+src/table.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/clox.dir/build.make CMakeFiles/clox.dir/src/table.c.s
+.PHONY : src/table.c.s
 
 src/value.o: src/value.c.o
 .PHONY : src/value.o
@@ -345,9 +393,15 @@ help:
 	@echo "... src/memory.o"
 	@echo "... src/memory.i"
 	@echo "... src/memory.s"
+	@echo "... src/object.o"
+	@echo "... src/object.i"
+	@echo "... src/object.s"
 	@echo "... src/scanner.o"
 	@echo "... src/scanner.i"
 	@echo "... src/scanner.s"
+	@echo "... src/table.o"
+	@echo "... src/table.i"
+	@echo "... src/table.s"
 	@echo "... src/value.o"
 	@echo "... src/value.i"
 	@echo "... src/value.s"

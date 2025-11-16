@@ -142,10 +142,24 @@ CMakeFiles/clox.dir/src/memory.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/clox.dir/src/memory.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/rhythmic_ocean/Desktop/lox/clox/src/memory.c -o CMakeFiles/clox.dir/src/memory.c.s
 
+CMakeFiles/clox.dir/src/object.c.o: CMakeFiles/clox.dir/flags.make
+CMakeFiles/clox.dir/src/object.c.o: /home/rhythmic_ocean/Desktop/lox/clox/src/object.c
+CMakeFiles/clox.dir/src/object.c.o: CMakeFiles/clox.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/rhythmic_ocean/Desktop/lox/clox/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/clox.dir/src/object.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/clox.dir/src/object.c.o -MF CMakeFiles/clox.dir/src/object.c.o.d -o CMakeFiles/clox.dir/src/object.c.o -c /home/rhythmic_ocean/Desktop/lox/clox/src/object.c
+
+CMakeFiles/clox.dir/src/object.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/clox.dir/src/object.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/rhythmic_ocean/Desktop/lox/clox/src/object.c > CMakeFiles/clox.dir/src/object.c.i
+
+CMakeFiles/clox.dir/src/object.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/clox.dir/src/object.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/rhythmic_ocean/Desktop/lox/clox/src/object.c -o CMakeFiles/clox.dir/src/object.c.s
+
 CMakeFiles/clox.dir/src/scanner.c.o: CMakeFiles/clox.dir/flags.make
 CMakeFiles/clox.dir/src/scanner.c.o: /home/rhythmic_ocean/Desktop/lox/clox/src/scanner.c
 CMakeFiles/clox.dir/src/scanner.c.o: CMakeFiles/clox.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/rhythmic_ocean/Desktop/lox/clox/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/clox.dir/src/scanner.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/rhythmic_ocean/Desktop/lox/clox/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/clox.dir/src/scanner.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/clox.dir/src/scanner.c.o -MF CMakeFiles/clox.dir/src/scanner.c.o.d -o CMakeFiles/clox.dir/src/scanner.c.o -c /home/rhythmic_ocean/Desktop/lox/clox/src/scanner.c
 
 CMakeFiles/clox.dir/src/scanner.c.i: cmake_force
@@ -156,10 +170,24 @@ CMakeFiles/clox.dir/src/scanner.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/clox.dir/src/scanner.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/rhythmic_ocean/Desktop/lox/clox/src/scanner.c -o CMakeFiles/clox.dir/src/scanner.c.s
 
+CMakeFiles/clox.dir/src/table.c.o: CMakeFiles/clox.dir/flags.make
+CMakeFiles/clox.dir/src/table.c.o: /home/rhythmic_ocean/Desktop/lox/clox/src/table.c
+CMakeFiles/clox.dir/src/table.c.o: CMakeFiles/clox.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/rhythmic_ocean/Desktop/lox/clox/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/clox.dir/src/table.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/clox.dir/src/table.c.o -MF CMakeFiles/clox.dir/src/table.c.o.d -o CMakeFiles/clox.dir/src/table.c.o -c /home/rhythmic_ocean/Desktop/lox/clox/src/table.c
+
+CMakeFiles/clox.dir/src/table.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/clox.dir/src/table.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/rhythmic_ocean/Desktop/lox/clox/src/table.c > CMakeFiles/clox.dir/src/table.c.i
+
+CMakeFiles/clox.dir/src/table.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/clox.dir/src/table.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/rhythmic_ocean/Desktop/lox/clox/src/table.c -o CMakeFiles/clox.dir/src/table.c.s
+
 CMakeFiles/clox.dir/src/value.c.o: CMakeFiles/clox.dir/flags.make
 CMakeFiles/clox.dir/src/value.c.o: /home/rhythmic_ocean/Desktop/lox/clox/src/value.c
 CMakeFiles/clox.dir/src/value.c.o: CMakeFiles/clox.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/rhythmic_ocean/Desktop/lox/clox/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/clox.dir/src/value.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/rhythmic_ocean/Desktop/lox/clox/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/clox.dir/src/value.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/clox.dir/src/value.c.o -MF CMakeFiles/clox.dir/src/value.c.o.d -o CMakeFiles/clox.dir/src/value.c.o -c /home/rhythmic_ocean/Desktop/lox/clox/src/value.c
 
 CMakeFiles/clox.dir/src/value.c.i: cmake_force
@@ -173,7 +201,7 @@ CMakeFiles/clox.dir/src/value.c.s: cmake_force
 CMakeFiles/clox.dir/src/vm.c.o: CMakeFiles/clox.dir/flags.make
 CMakeFiles/clox.dir/src/vm.c.o: /home/rhythmic_ocean/Desktop/lox/clox/src/vm.c
 CMakeFiles/clox.dir/src/vm.c.o: CMakeFiles/clox.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/rhythmic_ocean/Desktop/lox/clox/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/clox.dir/src/vm.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/rhythmic_ocean/Desktop/lox/clox/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/clox.dir/src/vm.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/clox.dir/src/vm.c.o -MF CMakeFiles/clox.dir/src/vm.c.o.d -o CMakeFiles/clox.dir/src/vm.c.o -c /home/rhythmic_ocean/Desktop/lox/clox/src/vm.c
 
 CMakeFiles/clox.dir/src/vm.c.i: cmake_force
@@ -191,7 +219,9 @@ clox_OBJECTS = \
 "CMakeFiles/clox.dir/src/debug.c.o" \
 "CMakeFiles/clox.dir/src/main.c.o" \
 "CMakeFiles/clox.dir/src/memory.c.o" \
+"CMakeFiles/clox.dir/src/object.c.o" \
 "CMakeFiles/clox.dir/src/scanner.c.o" \
+"CMakeFiles/clox.dir/src/table.c.o" \
 "CMakeFiles/clox.dir/src/value.c.o" \
 "CMakeFiles/clox.dir/src/vm.c.o"
 
@@ -203,13 +233,15 @@ clox: CMakeFiles/clox.dir/src/compiler.c.o
 clox: CMakeFiles/clox.dir/src/debug.c.o
 clox: CMakeFiles/clox.dir/src/main.c.o
 clox: CMakeFiles/clox.dir/src/memory.c.o
+clox: CMakeFiles/clox.dir/src/object.c.o
 clox: CMakeFiles/clox.dir/src/scanner.c.o
+clox: CMakeFiles/clox.dir/src/table.c.o
 clox: CMakeFiles/clox.dir/src/value.c.o
 clox: CMakeFiles/clox.dir/src/vm.c.o
 clox: CMakeFiles/clox.dir/build.make
 clox: CMakeFiles/clox.dir/compiler_depend.ts
 clox: CMakeFiles/clox.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/rhythmic_ocean/Desktop/lox/clox/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking C executable clox"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/rhythmic_ocean/Desktop/lox/clox/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking C executable clox"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/clox.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

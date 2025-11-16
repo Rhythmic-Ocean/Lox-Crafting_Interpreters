@@ -7,7 +7,9 @@ clox: \
   CMakeFiles/clox.dir/src/debug.c.o \
   CMakeFiles/clox.dir/src/main.c.o \
   CMakeFiles/clox.dir/src/memory.c.o \
+  CMakeFiles/clox.dir/src/object.c.o \
   CMakeFiles/clox.dir/src/scanner.c.o \
+  CMakeFiles/clox.dir/src/table.c.o \
   CMakeFiles/clox.dir/src/value.c.o \
   CMakeFiles/clox.dir/src/vm.c.o \
   /usr/lib/gcc/x86_64-redhat-linux/15/libgcc.a \
@@ -48,7 +50,11 @@ CMakeFiles/clox.dir/src/main.c.o:
 
 CMakeFiles/clox.dir/src/memory.c.o:
 
+CMakeFiles/clox.dir/src/object.c.o:
+
 CMakeFiles/clox.dir/src/scanner.c.o:
+
+CMakeFiles/clox.dir/src/table.c.o:
 
 CMakeFiles/clox.dir/src/value.c.o:
 

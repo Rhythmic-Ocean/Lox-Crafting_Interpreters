@@ -30,4 +30,9 @@ CMakeFiles/clox.dir/src/memory.c.o: \
  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdbool.h \
  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h \
  /usr/include/stdint.h /usr/include/bits/wchar.h \
- /usr/include/bits/stdint-uintn.h /usr/include/bits/stdint-least.h
+ /usr/include/bits/stdint-uintn.h /usr/include/bits/stdint-least.h \
+ /home/rhythmic_ocean/Desktop/lox/clox/include/object.h \
+ /home/rhythmic_ocean/Desktop/lox/clox/include/value.h \
+ /home/rhythmic_ocean/Desktop/lox/clox/include/vm.h \
+ /home/rhythmic_ocean/Desktop/lox/clox/include/chunk.h \
+ /home/rhythmic_ocean/Desktop/lox/clox/include/table.h

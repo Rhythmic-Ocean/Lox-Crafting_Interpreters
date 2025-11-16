@@ -44,4 +44,5 @@ CMakeFiles/clox.dir/src/main.c.o: \
  /home/rhythmic_ocean/Desktop/lox/clox/include/value.h \
  /home/rhythmic_ocean/Desktop/lox/clox/include/debug.h \
  /home/rhythmic_ocean/Desktop/lox/clox/include/chunk.h \
- /home/rhythmic_ocean/Desktop/lox/clox/include/vm.h
+ /home/rhythmic_ocean/Desktop/lox/clox/include/vm.h \
+ /home/rhythmic_ocean/Desktop/lox/clox/include/table.h

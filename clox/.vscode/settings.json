@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "type_traits": "c",
+        "utility": "c",
+        "array": "c",
+        "deque": "c",
+        "string": "c",
+        "unordered_map": "c",
+        "vector": "c",
+        "iterator": "c",
+        "string_view": "c",
+        "ranges": "c",
+        "span": "c",
+        "vm.h": "c",
+        "algorithm": "c"
+    }
+}

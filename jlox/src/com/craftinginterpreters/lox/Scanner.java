@@ -4,6 +4,7 @@ import static com.craftinginterpreters.lox.TokenType.AND;
 import static com.craftinginterpreters.lox.TokenType.BANG;
 import static com.craftinginterpreters.lox.TokenType.BANG_EQUAL;
 import static com.craftinginterpreters.lox.TokenType.CLASS;
+import static com.craftinginterpreters.lox.TokenType.COMMA;
 import static com.craftinginterpreters.lox.TokenType.DOT;
 import static com.craftinginterpreters.lox.TokenType.ELSE;
 import static com.craftinginterpreters.lox.TokenType.EOF;
@@ -102,6 +103,7 @@ public class Scanner{
       case '-' ->addToken(MINUS); 
       case '+' ->addToken(PLUS); 
       case ';' ->addToken(SEMICOLON); 
+      case ',' ->addToken(COMMA);
       case '*' ->addToken(STAR); //we don't have / cuz // means comment so we need to take care of it later
       
       //need to go thru at least 2 chars to determine what it exactly means. eg for ! we have to check if there's = right after or not!!

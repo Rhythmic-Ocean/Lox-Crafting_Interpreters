@@ -15,12 +15,17 @@ CMakeFiles/clox.dir/src/value.c.o: \
  /usr/include/bits/types/FILE.h /usr/include/bits/types/struct_FILE.h \
  /usr/include/bits/types/cookie_io_functions_t.h \
  /usr/include/bits/stdio_lim.h /usr/include/bits/floatn.h \
- /usr/include/bits/floatn-common.h \
- /home/rhythmic_ocean/Desktop/lox/clox/include/memory.h \
+ /usr/include/bits/floatn-common.h /usr/include/string.h \
+ /usr/include/bits/types/locale_t.h /usr/include/bits/types/__locale_t.h \
+ /usr/include/strings.h \
+ /home/rhythmic_ocean/Desktop/lox/clox/include/object.h \
  /home/rhythmic_ocean/Desktop/lox/clox/include/common.h \
  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdbool.h \
  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h \
  /usr/include/stdint.h /usr/include/bits/wchar.h \
  /usr/include/bits/stdint-intn.h /usr/include/bits/stdint-uintn.h \
  /usr/include/bits/stdint-least.h \
+ /home/rhythmic_ocean/Desktop/lox/clox/include/value.h \
+ /home/rhythmic_ocean/Desktop/lox/clox/include/memory.h \
+ /home/rhythmic_ocean/Desktop/lox/clox/include/object.h \
  /home/rhythmic_ocean/Desktop/lox/clox/include/value.h

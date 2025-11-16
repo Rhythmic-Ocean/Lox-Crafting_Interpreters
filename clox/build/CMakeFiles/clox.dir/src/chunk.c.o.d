@@ -39,5 +39,7 @@ CMakeFiles/clox.dir/src/chunk.c.o: \
  /usr/include/bits/stdint-uintn.h /usr/include/bits/stdint-least.h \
  /home/rhythmic_ocean/Desktop/lox/clox/include/value.h \
  /home/rhythmic_ocean/Desktop/lox/clox/include/memory.h \
+ /home/rhythmic_ocean/Desktop/lox/clox/include/object.h \
  /home/rhythmic_ocean/Desktop/lox/clox/include/vm.h \
- /home/rhythmic_ocean/Desktop/lox/clox/include/chunk.h
+ /home/rhythmic_ocean/Desktop/lox/clox/include/chunk.h \
+ /home/rhythmic_ocean/Desktop/lox/clox/include/table.h

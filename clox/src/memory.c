@@ -1,6 +1,7 @@
 #include <stdlib.h>
 
 #include "memory.h"
+#include "vm.h"
 
 void* reallocate(void* pointer, size_t oldSize, size_t newSize){
     if(newSize == 0){ //newSize = 0 implies we want to free the pointer
@@ -12,3 +13,23 @@ void* reallocate(void* pointer, size_t oldSize, size_t newSize){
     if (result == NULL) exit(1);//if not enough memory
     return result;
 }//this is for dynamic memory management so we can allocate memory at will.
+
+static void freeObject(Obj* object){
+    switch (object->type){
+        case OBJ_STRING:{
+            ObjString* string = (ObjString*)object;
+            FREE_ARRAY(char, string->chars, string->length+1);
+            FREE(ObjString, object);
+            break;
+        }
+    }
+}
+
+void freeObjects(){
+    Obj* object = vm.objects;
+    while(object != NULL){
+        Obj* next = object->next;
+        freeObject(object);
+        object = next;
+    }
+}
