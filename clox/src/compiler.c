@@ -246,7 +246,7 @@ static void declareVariable(){
     if(current->scopeDepth == 0) return;
 
     Token* name = &parser.previous;
-    for(int i = current->localCount - 1; i>=00; i--){
+    for(int i = current->localCount - 1; i>=0; i--){
         Local* local = &current->locals[i];
         if(local->depth != -1 && local->depth < current->scopeDepth){
             break;
@@ -308,7 +308,7 @@ static void string(bool canAssign){
 static void namedVariable(Token name, bool canAssign){
     uint8_t getOp, setOp;
     int arg = resolveLocal(current, &name);
-    if(arg != -10){
+    if(arg != -1){
         getOp = OP_GET_LOCAL;
         setOp = OP_SET_LOCAL;
     }
@@ -427,7 +427,9 @@ static void parsePrecedence(Precedence precedence){
     }
 
 }
-
+/**
+ * 
+ */
 
 static uint8_t parseVariable(const char* errorMessage){
     consume(TOKEN_IDENTIFIER, errorMessage);
@@ -456,20 +458,61 @@ static ParseRule* getRule(TokenType type){//solely to look up the parser rule
     return &rules[type];
 }
 
+/**
+ * Starting point for expression parsing.
+ * NOTE: expressions have SIDE EFFECTS! When expression chunks are done executing in vm stack they have a +1 effect
+ *      i.e they leave behind a bytecode in vm stack. That's why it's under expressionStatement, which 'pops' that last
+ *      bytecode so for an expressionStatement like this:
+ *      1+1;
+ *      the resulting answer, 2 which would have otherwise remained in the vm stack pops. So the above expression outputs
+ *      nothing. It's different for something like printStatement tho, cuz for:
+ *      print 1+1;
+ *      OP_PRINT does the popping as well as printing, which results in 2 ebing printed on screen.
+ * Calls parsePrecedence with lowest precedence argument 'PREC_ASSIGNMENT', start of pratt parsing execution
+ * NOTE: This interpreter uses recursive descent for parsing declaration and statements, and pratt parsing for 
+ *      expressions
+ * 
+ * @return void
+ */
+
 static void expression(){
     parsePrecedence(PREC_ASSIGNMENT);
 
 }
+/**
+ * For blocks, consumes right and left braces, throws error if closing not found
+ * 
+ * @return void
+ */
 
 static void block(){
-    while(!check(TOKEN_RIGHT_PAREN) && !check(TOKEN_EOF)){
+    while(!check(TOKEN_RIGHT_BRACE) && !check(TOKEN_EOF)){
         declaration();
     }
-    consume(TOKEN_RIGHT_BRACE, "Expect ')' after block.");
+    consume(TOKEN_RIGHT_BRACE, "Expect '}' after block.");
 }
 
+/**
+ * Declaring both global and local variables. 
+ * NOTE: before the variable is defined, it's scope is -1 and in accessible! It is to prevent smthing like:
+ *      var a = 1;
+ *      {
+ *          var a = a;
+ *      }
+ *      Here if we had not implement -1 scoping, when var a = a happens, the inner a tries to assign itself with
+ *      itself which doesn't have a initialzer yet... but having inner a initiaze as outer a's value makes more 
+ *      sense, So when assignment happens the compiler parses through Local and ignores the inner a declearing seeing
+ *      it's scoping as -1 and has outer a's value as the assignment target!
+ * 
+ * If a value has been initialized, emits the corresponding value to the chunk through expression(), else emits
+ * OP_NIL as initialized value
+ * 
+ * @return void
+ */
+
 static void varDeclaration(){
-    uint8_t global = parseVariable("Expect variable name");
+    uint8_t global = parseVariable("Expect variable name");//global = 0, if the given variable to be decleard is local. Else global is assigned the 
+    //corresponding index in ValueArray where the variable name is stored as Obj_String.
 
     if(match(TOKEN_EQUAL)){
         expression();//initializing var, if no initialization, the compiler simply gives it a nil initialization
@@ -493,13 +536,28 @@ static void varDeclaration(){
     
     */
 }
-
+/**
+ * Parses expression statements (expression + ;), emits OP_POP upon successful parsing or error for semicolen missing
+ * 
+ * @return void
+ * 
+ * NOTE: Expression has a SIDE EFFCT! After it's executed it leaves behind a bytecode as a result, that's why expression
+ *      statement has a OP_POP at the end to clear out the stack
+ * Eg: 1 + 1;
+ *      Leaves being 2 as the side effect in vm stack but since we are not supposed to display the result, we simply pop
+ *      the result!
+ */
 static void expressionStatement(){//expressionStatemet is expression followed by a ;. Usually to call a function or evaluate an assignment for it's side effect
     expression();
     consume(TOKEN_SEMICOLON, "Expect ';' after expression.");
     emitByte(OP_POP);
 }
 
+/**
+ * Emits OP_PRINT bytecode to bytecode chunk or throws error if no SEMICOLEN end of statement
+ * 
+ * @return void
+ */
 static void printStatement(){
     expression();
     consume(TOKEN_SEMICOLON, "Expect ';' after value.");

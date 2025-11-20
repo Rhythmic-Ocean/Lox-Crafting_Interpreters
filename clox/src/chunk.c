@@ -82,6 +82,10 @@ int addConstant(Chunk* chunk, Value value){
     return chunk->constants.count -1;
 }
 
+/**
+ * It's my own addition for OP_CONST_LONG
+ * @deprecated
+ */
 void writeConstant(Chunk* chunk, Value value, int line){
     writeValueArray(&chunk->constants, value);
     if(chunk->constants.count > 0xFFFFFF){

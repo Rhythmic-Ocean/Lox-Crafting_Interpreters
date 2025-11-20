@@ -1,3 +1,4 @@
+#UPDATE: About chp 24 for clox, writing docs for it too. Probably won't be doing that for jlox tho. But might try after this. Anyone stuck in CI's clox might find my comments on source code helpful!
 # Lox Bytecode VM Interpreter - clox (C)(IN_PROGRESS)
 # Lox Interpreter - jlox (Java)(COMPLETED - JAVADOCS IN PROGRESS)
 
