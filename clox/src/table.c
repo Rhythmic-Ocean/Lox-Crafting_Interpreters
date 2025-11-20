@@ -82,7 +82,6 @@ bool tableSet(Table* table, ObjString* key, Value value){
     bool isNewKey = (entry->key == NULL);
     if(isNewKey && IS_NIL(entry->value)) {
         table->count++; //only inc count if the new entry goes to a new bucket
-        printf("Here it is: %d", table->count);
     }
 
     entry->key = key;

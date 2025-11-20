@@ -16,10 +16,7 @@ static void repl(){
         printf(">");
         fflush(stdout);
 
-        if(!fgets(line, sizeof(line), stdin)){//reads from stdin and stores uptop sizeof(line) in a buffer and returns it's pointer to variable line 
-            //prevents buffer overflow unlike gets() where u cannot specify the number of characters to take in
-            // takes the character until EOF, or \n 
-            //automatically appends a \0 at the end of line making it a valid C string
+        if(!fgets(line, sizeof(line), stdin)){
             printf("\n");
             break;
         }

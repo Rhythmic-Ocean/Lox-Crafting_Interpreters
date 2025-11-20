@@ -10,7 +10,17 @@ void initValueArray(ValueArray* array){
     array->capacity = 0;
     array->count = 0;
 }
-
+/**
+ * Given a ValueArray and a value, and given enough space, the value is simply added
+ * to the ValueArray type array. If not enough space, an increment is in order.
+ * The value->count is increment so it points to one step outside the last element
+ * in the array
+ * 
+ * @param array ValueArray where given value is to be stored
+ * @param value the value to be stored
+ * 
+ * @return void
+ */
 void writeValueArray(ValueArray* array, Value value){
     if(array->capacity < array->count + 1){
         int oldCapacity = array->capacity;

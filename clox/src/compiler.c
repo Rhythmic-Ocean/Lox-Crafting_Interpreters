@@ -1,5 +1,9 @@
+//NOTE: delcaring variable means when it's initliazed in the memory
+//defining it means when it's available for usage
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "common.h"
 #include "compiler.h"
@@ -32,7 +36,7 @@ typedef enum{
     PREC_PRIMARY
 }Precedence;
 
-typedef void (*ParseFn)(bool canAssign);//function pointers for functions that take no arguments and return nothing
+typedef void (*ParseFn)(bool canAssign); //ParseFn is an alias for a function pointer that returns void and takes 'bool canAssign' as argument. 
 
 typedef struct{
     ParseFn prefix;
@@ -40,7 +44,19 @@ typedef struct{
     Precedence precedence;
 }ParseRule;
 
+typedef struct{
+    Token name;
+    int depth;
+} Local;
+
+typedef struct{
+    Local locals[UINT8_COUNT];
+    int localCount;
+    int scopeDepth;
+} Compiler;
+
 Parser parser;
+Compiler* current = NULL;
 Chunk* compilingChunk;
 
 static Chunk* currentChunk(){
@@ -76,10 +92,20 @@ static void errorAtCurrent(const char* message){
     errorAt(&parser.current, message);
 }
 
+/**
+ * Advances the parser to next token
+ * 
+ * This function invokes scanToken() until it encounts a non error token type. 
+ * If an TOKEN_ERROR is thrown, it reports it and tries again. 
+ * parser.current is assigned the latest token type while parser.previous 
+ * holds the one right before.
+ * 
+ * @return void
+ */
 static void advance(){
     parser.previous = parser.current;
     for(;;){
-        parser.current = scanToken();
+    parser.current = scanToken();
    
         if(parser.current.type != TOKEN_ERROR) break;
 
@@ -87,6 +113,18 @@ static void advance(){
     }
 }
 
+/**
+ * Returns true and 'advances' if the Token being pointe by parser.current is 
+ * of the type desired, else error is through at current token with given 
+ * message
+ * 
+ * @param type the desired TokenType
+ * @param message a string of error message, in case the type check is negative
+ * @return void
+ * 
+ * Special note: like match but throws error instead of returning false on negative result
+ * strict tokentype check
+ */
 static void consume(TokenType type, const char* message){
     if(parser.current.type == type){
         advance();
@@ -99,6 +137,15 @@ static bool check(TokenType type){
     return parser.current.type == type;
 }
 
+/**
+ * Returns true and 'advances' if the Token being pointed at by the parser.current
+ * is of the type desired, else returns false.
+ * @param type a TokenType
+ * @return bool
+ * 
+ * Special note: like consume but returns false instead of error type
+ * non-strict tokentype check
+ */
 static bool match(TokenType type){
     if(!check(type)) return false;
     advance();
@@ -132,11 +179,28 @@ static void emitConstant(Value value){
     emitBytes(OP_CONSTANT, makeConstant(value));
 }
 
+static void initCompiler(Compiler* compiler){
+    compiler->localCount = 0;
+    compiler->scopeDepth = 0;
+    current = compiler;
+}
 
 static void endCompiler(){
     emitReturn();
 }
 
+static void beginScope(){
+    current->scopeDepth++;
+}
+
+static void endScope(){
+    current->scopeDepth--;
+
+    while(current->localCount > 0 && current->locals[current->localCount - 1].depth > current->scopeDepth){
+        emitByte(OP_POP);
+        current->localCount--;
+    }
+}
 
 static void expression();
 static void statement();
@@ -146,6 +210,54 @@ static void parsePrecedence(Precedence precedence);
 
 static uint8_t identifierConstant(Token* name){
     return makeConstant(OBJ_VAL(copyString(name->start, name->length)));
+}
+
+static bool identifiersEqual(Token* a, Token* b){
+    if(a->length!= b->length) return false;
+    return memcmp(a->start, b->start, a->length) == 0;
+}
+
+static int resolveLocal(Compiler* compiler, Token* name){
+    for(int i = compiler->localCount - 1; i >= 0; i--){//walking backwards to account for shadowing
+        Local* local = &compiler->locals[i];
+        if(identifiersEqual(name, &local->name)){
+            if(local -> depth == -1){
+                error("Can't read local var in itls own initializer!");
+            }
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+static void addLocal(Token name){
+    if (current->localCount == UINT8_COUNT){
+        error("Too many local variables in the function.");
+        return;
+    }
+    Local* local = &current->locals[current->localCount++];
+    local->name = name;
+    local->depth = -1;
+    local->depth = current->scopeDepth;
+}
+
+static void declareVariable(){
+    if(current->scopeDepth == 0) return;
+
+    Token* name = &parser.previous;
+    for(int i = current->localCount - 1; i>=00; i--){
+        Local* local = &current->locals[i];
+        if(local->depth != -1 && local->depth < current->scopeDepth){
+            break;
+        }
+
+        if(identifiersEqual(name, &local->name)){
+            error("Already a vairable with this name in scope.");
+        }
+    }
+
+    addLocal(*name);
 }
 
 static void binary(bool canAssign){
@@ -194,13 +306,24 @@ static void string(bool canAssign){
 
 
 static void namedVariable(Token name, bool canAssign){
-    uint8_t arg = identifierConstant(&name);
-    if(canAssign && match(TOKEN_EQUAL)){
-        expression();
-        emitBytes(OP_SET_GLOBAL, arg);//to set global expr->setter
+    uint8_t getOp, setOp;
+    int arg = resolveLocal(current, &name);
+    if(arg != -10){
+        getOp = OP_GET_LOCAL;
+        setOp = OP_SET_LOCAL;
     }
     else{
-        emitBytes(OP_GET_GLOBAL, arg);//to get global expr->getter
+        arg = identifierConstant(&name);
+        getOp = OP_GET_GLOBAL;
+        setOp = OP_SET_GLOBAL;
+    }
+
+    if(canAssign && match(TOKEN_EQUAL)){
+        expression();
+        emitBytes(setOp, (uint8_t)arg);//to set global expr->setter
+    }
+    else{
+        emitBytes(getOp, (uint8_t)arg);//to get global expr->getter
     }
 
     /*
@@ -308,10 +431,24 @@ static void parsePrecedence(Precedence precedence){
 
 static uint8_t parseVariable(const char* errorMessage){
     consume(TOKEN_IDENTIFIER, errorMessage);
+
+    declareVariable();
+    if(current->scopeDepth > 0) return 0;//exit if in local scope
+
     return identifierConstant(&parser.previous);
 }
 
+static void markInitialized(){
+    current->locals[current->localCount - 1].depth = 
+        current->scopeDepth;
+}
+
 static void defineVariable(uint8_t global){
+    if(current->scopeDepth > 0){
+        markInitialized();
+        return;
+    }
+
     emitBytes(OP_DEFINE_GLOBAL, global);//OP_DEFINE_GLOBAL's like OP_CONSTANT but for declaring global variables
 }
 
@@ -322,6 +459,13 @@ static ParseRule* getRule(TokenType type){//solely to look up the parser rule
 static void expression(){
     parsePrecedence(PREC_ASSIGNMENT);
 
+}
+
+static void block(){
+    while(!check(TOKEN_RIGHT_PAREN) && !check(TOKEN_EOF)){
+        declaration();
+    }
+    consume(TOKEN_RIGHT_BRACE, "Expect ')' after block.");
 }
 
 static void varDeclaration(){
@@ -361,6 +505,13 @@ static void printStatement(){
     consume(TOKEN_SEMICOLON, "Expect ';' after value.");
     emitByte(OP_PRINT);
 }
+/**
+ * To get the parser out of the panic mode, called at declaration().
+ * Passes through keywords util EOF, ; or any other declearitive or 
+ * statement type tokens
+ * 
+ * @return void
+ */
 
 static void synchronize(){
     parser.panicMode = false;
@@ -382,6 +533,16 @@ static void synchronize(){
     }
 }
 
+/**
+ * First step of the recursive descent. Any declearations made for each token
+ * are 'matched' and sent off to be parsed in various functions. If it's not a 
+ * declaration, it passes thru to statements().
+ * 
+ * Also, if the parser is paniking, calls synchronize to get the tokens in a state 
+ * where it can parse again
+ * 
+ * @return void
+ */
 static void declaration(){
     if(match(TOKEN_VAR)){
         varDeclaration();
@@ -393,17 +554,38 @@ static void declaration(){
     if(parser.panicMode) synchronize();
 }
 
+/**
+ * Second step of the descent, any statements are made here. The statement's keywords are
+ * matched, if the token does not preludes a statements, it's let pass through
+ * 
+ * @return void
+ */
 static void statement(){
     if(match(TOKEN_PRINT)){
         printStatement();
+    }
+    else if (match(TOKEN_LEFT_BRACE)){
+        beginScope();
+        block();
+        endScope();
     }
     else{
         expressionStatement();
     }
 }
 
+/**
+ * Gets the source code and a chunk, turns the source string into bytecode 
+ * and stores it in the porovided chunk location
+ * 
+ * @param source the source code string
+ * @param chunk the compiler chunk location
+ * @return bool
+ */
 bool compile(const char* source, Chunk* chunk){
     initScanner(source);
+    Compiler compiler;
+    initCompiler(&compiler);
     compilingChunk = chunk;
     parser.hadError = false;
     parser.panicMode = false;

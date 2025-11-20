@@ -8,6 +8,12 @@
 #include "memory.h"
 #include "vm.h"
 
+/**
+ * Each element of the chunk is initialized for the provided chunk
+ * 
+ * @param chunk
+ * @return void
+ */
 void initChunk(Chunk* chunk){//this chunk has already been malloced smwhere else
     chunk->count = 0;
     chunk->capacity = 0;
@@ -18,7 +24,25 @@ void initChunk(Chunk* chunk){//this chunk has already been malloced smwhere else
     chunk->new_lines = NULL;
     initValueArray(&chunk->constants);
 }
-
+/**
+ * Provided with valid chunk location, the byte to be written upon it and the line 
+ * number of the corresponding byte's source code's string, the function:
+ * Given enough capacity in the chunk, appends on it the bytecode provided
+ * Increases chunk count
+ * If the line number does not match with the last line number stored in chunk->line, 
+ *      a new line number is added to chunk->line int array
+ * If a new line number is added to chunk->line, a new integer is added to chunk->new_line 
+ *      array too, this one correspondes to the chunk->codes's index for the latest bytecode 
+ *      which caused the new line
+ * If chunk capacity is not enough, an increment is done to chunk->code dynamic array
+ * If LineCapacity is not enough, the same is done to chunk->line array
+ * 
+ * @param chunk
+ * @param byte
+ * @param line
+ * 
+ * @return void
+ */
 void writeChunk(Chunk* chunk, uint8_t byte, int line){
     if(chunk->capacity < chunk->count + 1){
         int oldCapacity = chunk->capacity;
@@ -42,6 +66,16 @@ void writeChunk(Chunk* chunk, uint8_t byte, int line){
     chunk->count++;
     
 }
+/**
+ * Given the chunk and corresponding value it invokes writeValue Array to write the value
+ * to the value's array inside chunk. Returns the index in the value array where this value was
+ * written.
+ * 
+ * @param chunk
+ * @param value
+ * 
+ * @return chunk->constants.count - 1 => the value that chunk last added to it's ValueArray
+ */
 
 int addConstant(Chunk* chunk, Value value){
     writeValueArray(&chunk->constants, value);

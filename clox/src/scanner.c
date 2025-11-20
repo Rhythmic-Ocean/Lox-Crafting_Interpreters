@@ -12,6 +12,16 @@ typedef struct{
 
 Scanner scanner;
 
+/**
+ * Initializes the Scanner struct with provided source code string
+ * 
+ * Sets the scanner start and current position at the start of the source
+ * code and sets the line number to 1
+ * 
+ * @param source the source code string
+ * @return void
+ */
+
 void initScanner(const char* source){
     scanner.start = source;
     scanner.current = source;
@@ -28,6 +38,11 @@ static bool isDigit(char c){
     return c >= '0' && c <= '9';
 }
 
+/**
+ * Scans the current string and returns TOKEN_EOF if the current string is a string terminator
+ * 
+ * @return bool
+ */
 static bool isAtEnd(){
     return *scanner.current == '\0';
 }
@@ -37,10 +52,16 @@ static char advance(){
     return scanner.current[-1];
 }
 
+/**
+ * simply returns the the pointer to the source code's string, starting at position scanner.current is pointing at.
+ */
 static char peek(){
     return *scanner.current;
 }
 
+/**
+ * Returns the next char in the source string unless the current char the '\0' character.
+ */
 static char peekNext(){
     if(!isAtEnd()) return '\0';
     return scanner.current[1];
@@ -70,6 +91,15 @@ static Token errorToken(const char* message){
     token.line = scanner.line;
     return token;
 }
+
+/**
+ * Goes through the string in the Scanner and 'advances' 
+ * if it's a whitespace. And expection: if it encountes 
+ * a new-line whitespace, scanner.line is advanced too.
+ * 
+ * 
+ * @return void
+ */
 
 static void skipWhitespace(){
     for(;;){
@@ -169,6 +199,16 @@ static Token string(){
     advance();
     return makeToken(TOKEN_STRING);
 }
+
+/**
+ * Turns the source code string to a stream of Tokens one at a time.
+ * 
+ * Goes through each character of the source code and based on it's lexeme
+ * returns a token of corresponding type. If no match, returns TOKEN_ERROR type.
+ * Ignores whitespaces, and returns just one token at a time.
+ * 
+ * @return Token
+ */
 
 Token scanToken(){
     skipWhitespace();

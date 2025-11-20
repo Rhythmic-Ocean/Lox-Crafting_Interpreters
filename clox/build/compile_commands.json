@@ -1,0 +1,62 @@
+[
+{
+  "directory": "/home/rhythmic_ocean/Desktop/lox/clox/build",
+  "command": "/usr/bin/gcc -I/home/rhythmic_ocean/Desktop/lox/clox/include -g -o CMakeFiles/clox.dir/src/chunk.c.o -c /home/rhythmic_ocean/Desktop/lox/clox/src/chunk.c",
+  "file": "/home/rhythmic_ocean/Desktop/lox/clox/src/chunk.c",
+  "output": "CMakeFiles/clox.dir/src/chunk.c.o"
+},
+{
+  "directory": "/home/rhythmic_ocean/Desktop/lox/clox/build",
+  "command": "/usr/bin/gcc -I/home/rhythmic_ocean/Desktop/lox/clox/include -g -o CMakeFiles/clox.dir/src/compiler.c.o -c /home/rhythmic_ocean/Desktop/lox/clox/src/compiler.c",
+  "file": "/home/rhythmic_ocean/Desktop/lox/clox/src/compiler.c",
+  "output": "CMakeFiles/clox.dir/src/compiler.c.o"
+},
+{
+  "directory": "/home/rhythmic_ocean/Desktop/lox/clox/build",
+  "command": "/usr/bin/gcc -I/home/rhythmic_ocean/Desktop/lox/clox/include -g -o CMakeFiles/clox.dir/src/debug.c.o -c /home/rhythmic_ocean/Desktop/lox/clox/src/debug.c",
+  "file": "/home/rhythmic_ocean/Desktop/lox/clox/src/debug.c",
+  "output": "CMakeFiles/clox.dir/src/debug.c.o"
+},
+{
+  "directory": "/home/rhythmic_ocean/Desktop/lox/clox/build",
+  "command": "/usr/bin/gcc -I/home/rhythmic_ocean/Desktop/lox/clox/include -g -o CMakeFiles/clox.dir/src/main.c.o -c /home/rhythmic_ocean/Desktop/lox/clox/src/main.c",
+  "file": "/home/rhythmic_ocean/Desktop/lox/clox/src/main.c",
+  "output": "CMakeFiles/clox.dir/src/main.c.o"
+},
+{
+  "directory": "/home/rhythmic_ocean/Desktop/lox/clox/build",
+  "command": "/usr/bin/gcc -I/home/rhythmic_ocean/Desktop/lox/clox/include -g -o CMakeFiles/clox.dir/src/memory.c.o -c /home/rhythmic_ocean/Desktop/lox/clox/src/memory.c",
+  "file": "/home/rhythmic_ocean/Desktop/lox/clox/src/memory.c",
+  "output": "CMakeFiles/clox.dir/src/memory.c.o"
+},
+{
+  "directory": "/home/rhythmic_ocean/Desktop/lox/clox/build",
+  "command": "/usr/bin/gcc -I/home/rhythmic_ocean/Desktop/lox/clox/include -g -o CMakeFiles/clox.dir/src/object.c.o -c /home/rhythmic_ocean/Desktop/lox/clox/src/object.c",
+  "file": "/home/rhythmic_ocean/Desktop/lox/clox/src/object.c",
+  "output": "CMakeFiles/clox.dir/src/object.c.o"
+},
+{
+  "directory": "/home/rhythmic_ocean/Desktop/lox/clox/build",
+  "command": "/usr/bin/gcc -I/home/rhythmic_ocean/Desktop/lox/clox/include -g -o CMakeFiles/clox.dir/src/scanner.c.o -c /home/rhythmic_ocean/Desktop/lox/clox/src/scanner.c",
+  "file": "/home/rhythmic_ocean/Desktop/lox/clox/src/scanner.c",
+  "output": "CMakeFiles/clox.dir/src/scanner.c.o"
+},
+{
+  "directory": "/home/rhythmic_ocean/Desktop/lox/clox/build",
+  "command": "/usr/bin/gcc -I/home/rhythmic_ocean/Desktop/lox/clox/include -g -o CMakeFiles/clox.dir/src/table.c.o -c /home/rhythmic_ocean/Desktop/lox/clox/src/table.c",
+  "file": "/home/rhythmic_ocean/Desktop/lox/clox/src/table.c",
+  "output": "CMakeFiles/clox.dir/src/table.c.o"
+},
+{
+  "directory": "/home/rhythmic_ocean/Desktop/lox/clox/build",
+  "command": "/usr/bin/gcc -I/home/rhythmic_ocean/Desktop/lox/clox/include -g -o CMakeFiles/clox.dir/src/value.c.o -c /home/rhythmic_ocean/Desktop/lox/clox/src/value.c",
+  "file": "/home/rhythmic_ocean/Desktop/lox/clox/src/value.c",
+  "output": "CMakeFiles/clox.dir/src/value.c.o"
+},
+{
+  "directory": "/home/rhythmic_ocean/Desktop/lox/clox/build",
+  "command": "/usr/bin/gcc -I/home/rhythmic_ocean/Desktop/lox/clox/include -g -o CMakeFiles/clox.dir/src/vm.c.o -c /home/rhythmic_ocean/Desktop/lox/clox/src/vm.c",
+  "file": "/home/rhythmic_ocean/Desktop/lox/clox/src/vm.c",
+  "output": "CMakeFiles/clox.dir/src/vm.c.o"
+}
+]
