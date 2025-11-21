@@ -14,7 +14,7 @@
 #include "debug.h"
 #endif
 
-
+//A local struct for parser
 typedef struct{
     Token current;
     Token previous;
@@ -22,6 +22,7 @@ typedef struct{
     bool panicMode;//to initiate error recovery
 }Parser;
 
+//Enum with precedence in order for pratt parsing
 typedef enum{
     PREC_NONE,
     PREC_ASSIGNMENT,
@@ -36,19 +37,24 @@ typedef enum{
     PREC_PRIMARY
 }Precedence;
 
-typedef void (*ParseFn)(bool canAssign); //ParseFn is an alias for a function pointer that returns void and takes 'bool canAssign' as argument. 
+//ParseFn is just an alias for a function pointer that returns void and can take argument of type bool
+typedef void (*ParseFn)(bool canAssign);
 
+//struct that holds the infix and prefix function for any corresponding precedence
 typedef struct{
     ParseFn prefix;
     ParseFn infix;
     Precedence precedence;
 }ParseRule;
 
+//just holds the token name and scope depth of a local variable
 typedef struct{
     Token name;
     int depth;
 } Local;
 
+//a namespace equivalent for local variables, just a names of the locals are stored here tho
+//NOTE: Only exists during compile time to emit corresponding bytecodes, DOES NOT pass on to the VM
 typedef struct{
     Local locals[UINT8_COUNT];
     int localCount;
@@ -59,23 +65,34 @@ Parser parser;
 Compiler* current = NULL;
 Chunk* compilingChunk;
 
+/**
+ * Returns temporary chunk for the duration of compilation
+ * 
+ * @return chunk*
+ */
 static Chunk* currentChunk(){
     return compilingChunk;
 }
 
+/**
+ * Given the Token producing error and the error message to be delivered, it prints it in proper format at stderr
+ * 
+ * @param token Token that's at or nearest to error prone location
+ * @param message Corresponding string of error message
+ * 
+ * @return void
+ * 
+ * NOTE: When at panicMode, simpley returns as we don't wanna report any more error until the program srynconizes after error
+ * 
+ * If panicMode is not true, toggles it, and prints an appropriate error message
+ */
 static void errorAt(Token* token, const char* message){
-    if(parser.panicMode) return; //while in panic mode, simply ignore any other errors sent our way
-    //cuz we want the parser to first get syncronized
-    //after we get in sync, ignoring all the prev error, normal error detection starts
-    //but hadError will always be true, and the bytecode's never gonna get executed
+    if(parser.panicMode) return; 
     parser.panicMode = true;
     fprintf(stderr, "[line %d] Error", token->line);
 
     if(token->type == TOKEN_EOF){
         fprintf(stderr, " at end");
-    }
-    else if(token->type == TOKEN_ERROR){
-
     }
     else{
         fprintf(stderr, " at '%.*s'", token->length, token->start);
@@ -132,7 +149,12 @@ static void consume(TokenType type, const char* message){
     }
     errorAtCurrent(message);
 }
-
+/**
+ * Just checks weather token in parser.current's type is equal to the given TokeType
+ * 
+ * @param type
+ * @return bool
+ */
 static bool check(TokenType type){
     return parser.current.type == type;
 }
@@ -152,20 +174,42 @@ static bool match(TokenType type){
     return true;
 }
 
+/**
+ * Emits one byte to current Chunk using the writeChunk() function
+ * 
+ * @param byte
+ * @return void
+ */
 static void emitByte(uint8_t byte){//writing into the chunk
     writeChunk(currentChunk(), byte, parser.previous.line);
 
 }
 
+/**
+ * For emitting 2 bytes at once for some bytecode of type OP_CONSTANT or OP_DEFINE_GLOBAL
+ * 
+ * @param byte1 usually OP_CONSTANT, OP_DEFINE_GLOBAL or smthing like that
+ * @param byte2 usually index of the corresponding value it represents
+ */
 static void emitBytes(uint8_t byte1, uint8_t byte2){
     emitByte(byte1);
     emitByte(byte2);
 }
 
+/**
+ * Just invokes emitByte to return a bytecode that's OP_RETURN
+ */
 static void emitReturn(){
     emitByte(OP_RETURN);
 }
 
+/**
+ * Given a Value, it invokes addConstant to add it to the ValueArray in the compiler chunk and 
+ * return the corresponding index where the constant is stored
+ * 
+ * @param value the value to tbe stored in the array
+ * @return uint8_t the index where it is stored
+ */
 static uint8_t makeConstant(Value value){
     int constant = addConstant(currentChunk(), value);
     if(constant > UINT8_MAX){
@@ -175,24 +219,51 @@ static uint8_t makeConstant(Value value){
     return (uint8_t)constant;
 }
 
+/**
+ * Emits OP_CONSTANT followed by the corresponding value to the chunk
+ * 
+ * @param value
+ * @return void
+ */
 static void emitConstant(Value value){
     emitBytes(OP_CONSTANT, makeConstant(value));
 }
-
+/** 
+ * Initiates the local namespace for the compilation process
+ * 
+ * @param compiler
+ * 
+ * @return void
+*/
 static void initCompiler(Compiler* compiler){
     compiler->localCount = 0;
     compiler->scopeDepth = 0;
     current = compiler;
 }
-
+/**
+ * emits OP_RETURN at the end of compilation to the chunk to indicate end of program
+ * 
+ * @return void
+ */
 static void endCompiler(){
     emitReturn();
 }
-
+/**
+ * beginning the block's scope by increasing the overall compiler scope
+ * 
+ * @return void
+ */
 static void beginScope(){
     current->scopeDepth++;
 }
 
+/**
+ * ending the block's scopeby decreasing the overall compiler's scope plus emitting x numbers of OP_POPs where 
+ * x is the number of local variables at that scope
+ * This interprets to removing all the value that's in the scope that's in the stack after the block for that scope ends
+ * 
+ * @return void
+ */
 static void endScope(){
     current->scopeDepth--;
 
@@ -208,21 +279,39 @@ static void declaration();
 static ParseRule* getRule(TokenType type);
 static void parsePrecedence(Precedence precedence);
 
+/**
+ * Returns the index of the global variable name in the global ValueArray 
+ * 
+ * @return uint8_t
+ */
 static uint8_t identifierConstant(Token* name){
     return makeConstant(OBJ_VAL(copyString(name->start, name->length)));
 }
-
+/**
+ * Returns true or false depending on weather two variable names are equivalent or not
+ * 
+ * @param a First Token
+ * @param b Second Token
+ * @return bool
+ */
 static bool identifiersEqual(Token* a, Token* b){
-    if(a->length!= b->length) return false;
+    if(a->length != b->length) return false;
     return memcmp(a->start, b->start, a->length) == 0;
 }
 
+/**
+ * Searching for given variable name in local namespace and returning it's index in current->local if found
+ * returns -1 if not found
+ * 
+ * @param compiler namesapce for local variable
+ * 
+ */
 static int resolveLocal(Compiler* compiler, Token* name){
     for(int i = compiler->localCount - 1; i >= 0; i--){//walking backwards to account for shadowing
         Local* local = &compiler->locals[i];
         if(identifiersEqual(name, &local->name)){
             if(local -> depth == -1){
-                error("Can't read local var in itls own initializer!");
+                error("Can't read local var in it's own initializer!");
             }
             return i;
         }
@@ -230,7 +319,11 @@ static int resolveLocal(Compiler* compiler, Token* name){
 
     return -1;
 }
-
+/**
+ * Creates i.e adds aka declears the local variable by adding it to the Compiler current and creating a new local identifier.
+ * Throws error if there's more than UINT8_COUNT local variable (can be changed)
+ * local->depth is set to -1 as the variable has not been 'defined' yet!
+ */
 static void addLocal(Token name){
     if (current->localCount == UINT8_COUNT){
         error("Too many local variables in the function.");
@@ -239,13 +332,52 @@ static void addLocal(Token name){
     Local* local = &current->locals[current->localCount++];
     local->name = name;
     local->depth = -1;
-    local->depth = current->scopeDepth;
 }
 
+/**
+ * if the given variable is global just return.
+ * 
+ * For Local variable:
+ *  It iterates through every local variable in the the Local array FROM BACK at current->local. The loop breaks when it encounters a local with:
+ *      local->depth < current scopeDepth --> implies that we are out of current scope, i.e there can't be a variable of same name within the same scope
+ *          we can safely define this local
+ *      local->depth != 1 :dunno yet!! (as of chp 24)
+ * 
+ *      BUT if there's a local of same name, within the same scope, then an error is thrown.
+ * 
+ * if it passes the loop or breaks out of it, addLocal() is called to finally add map it as a local variable!
+ * 
+ * @return void
+ *      
+ * NOTE: For global vars, it's mapped in hashtables, which is done at runtime. So you just turn the var names to 
+ *      (Value)OBJ_STRING and have it with OP_DEFINE_GLOBAL. Also have the value as Value and store it's index at
+ *      ValueArray in the chunk alongside OP_CONST. GLOBAL is decleared like this:
+ *      so for var a = 1+1*2;
+ *      OP_CONST 
+ *      INDEX_OF_1
+ *      OP_CONST 
+ *      INDEX_OF_1
+ *      OP_CONST
+ *      INDEX_OF_2
+ *      OP_STAR
+ *      OP_ADD
+ *      OP_DEFINE_GLOBAL 
+ *      INDEX_OF_a
+ *      And when the vm sees OP_DEFINE_GLOBAL a at the end, it maps a with whatever is the result of var declaration. 
+ *      A special note, INDEX_OF_a is usually the lowest in ValueArray, and all these INDEX_OF are uint_8 type, so just numbers
+ * 
+ * NOTE:
+ *  var a = 1;
+ *  var a = 1;
+ *  A double declearation like this only a problem in local scope.
+ *  It's allowed in global scope for clox.
+ * 
+ * 
+ */
 static void declareVariable(){
     if(current->scopeDepth == 0) return;
 
-    Token* name = &parser.previous;
+Token* name = &parser.previous;
     for(int i = current->localCount - 1; i>=0; i--){
         Local* local = &current->locals[i];
         if(local->depth != -1 && local->depth < current->scopeDepth){
@@ -304,7 +436,27 @@ static void string(bool canAssign){
     emitConstant(OBJ_VAL(copyString(parser.previous.start + 1, parser.previous.length - 2)));
 }//+1 and -2 to remove "" and the last \0
 
-
+/**
+ * If resolveLocal returns -1, that means it's GLOBAL variable and corresponding stuffs are emitted
+ * else it's local and OP_SET_LOCAL or GOBAL is emitted based on weather the next token is TOKEN_EQUAL or not
+ * 
+ * NOTE: Local and Global Variable WORK very differently even tho when compiler emits similar things when encountering them (during non declearation phase)
+ *       It starts from declearation. For global it emits the corresponding string (variable name)'s index in ValueArray with OP_DEFINE_GLOBAL along 
+ *       with the OP_CONSTANTs and the corresponding index for it's values. When vm sees it, it maps the variable name and the value in hashtable. So when you
+ *       do OP_SET_GLOBAL or OP_GET_GLOBAL along with args, this args is nothing by the index of variable name in ValueArray which will be used by vm to look up 
+ *       the corresponding value in the hash table
+ * 
+ *       For local variables it's very very different, almost everything is handled in compile time and all that vm does is pop and push around the values. The 'namespace'
+ *       maintaining the local variable Compiler compiler is just here in compile time and will not be passed on to vm. Instead, the current->local[] arrays just MIRRORS the 
+ *       arrangement of local variable's values. So what you are passing as args is the slot in vm stack where the value of the variable described will live in the vm.stack
+ *       NOTE: WHEN YOU PUSH SOMETHING TO VM STACK, YOU ARE PUSHING THE VALUES NOT A BYTECODE!!
+ * 
+ * @param name the variable name that appears in the expression
+ * @param canAssign weather it can be assigned a value or not (to avoid something like a*b = c)
+ * 
+ * @return void
+ * 
+ */
 static void namedVariable(Token name, bool canAssign){
     uint8_t getOp, setOp;
     int arg = resolveLocal(current, &name);
@@ -356,11 +508,13 @@ static void unary(bool canAssign){
     }
 }
 
-ParseRule rules[] = {//array initializers in C. its like:
-    //rules[TOKEN_LEFT_PAREN].prefix = grouping;
-    //rules[TOKEN_LEFT_PAREN].infix = NULL;
-    //rules[TOKEN_LEFT_PAREN].precedence = PREC_NONE;
-    //this for everything below!
+/**
+ * Array of ParseRule where each index is from TokenType enum. This is how you initialize multiple array in C. Equivalent for TOKEN_LEFT_PAREN would be:
+ *      rules[TOKEN_LEFT_PAREN].prefix = grouping;
+        rules[TOKEN_LEFT_PAREN].infix = NULL;
+        rules[TOKEN_LEFT_PAREN].precedence = PREC_NONE;
+ */
+ParseRule rules[] = {
     [TOKEN_LEFT_PAREN]    = {grouping, NULL,   PREC_NONE},
     [TOKEN_RIGHT_PAREN]   = {NULL,     NULL,   PREC_NONE},
     [TOKEN_LEFT_BRACE]    = {NULL,     NULL,   PREC_NONE}, 
@@ -403,7 +557,9 @@ ParseRule rules[] = {//array initializers in C. its like:
     [TOKEN_EOF]           = {NULL,     NULL,   PREC_NONE},
 
 };
-
+/**
+ * Core of our pratt parser. For each expression, it gets it's precedence,  
+ */
 static void parsePrecedence(Precedence precedence){
     advance();
     ParseFn prefixRule = getRule(parser.previous.type) -> prefix;
@@ -428,7 +584,14 @@ static void parsePrecedence(Precedence precedence){
 
 }
 /**
+ * To 'declear' both local and global variable. First declears local variable through declearVariable() 
+ * On declearVariable it simply adds the local variable's token to compiler
+ * For global variable, it uses identifierConstant(), which in turn stores the variable's name as value to chunk's ValueArray 
+ * and returns the index where it is stored.
  * 
+ * @param errorMessage the error message to be displayed in case of missing variable name
+ * 
+ * @return uint8_t i.e the index on ValueArray where the global variable's name is stored as OBJ_STRING, returns 0 if it's a local var
  */
 
 static uint8_t parseVariable(const char* errorMessage){
@@ -440,11 +603,26 @@ static uint8_t parseVariable(const char* errorMessage){
     return identifierConstant(&parser.previous);
 }
 
+/**
+ * Initializes aka defines the most recently decleared the variable and gives it it's current scope
+ * 
+ * @return void
+ */
+
 static void markInitialized(){
     current->locals[current->localCount - 1].depth = 
         current->scopeDepth;
 }
 
+/**
+ * For globals, simply emits OP_DEFINE_GLOBAL, for local calls markInitialized() fnc
+ * NOTE: In clox, global variables are "resolved after compile time", i.e we just compile the corresponding global declarations as
+ *      Bytecode and store the value in chunks. So at run time as the vm goes thru the chunk, it puts the declaraion in hashtable at
+ *      runtime. For local vars, the mapping of variables to it's value is done at compile time using the Compile struct, making local 
+ *      variables a little more efficient. 
+ * 
+ * @return void
+ */
 static void defineVariable(uint8_t global){
     if(current->scopeDepth > 0){
         markInitialized();
@@ -454,6 +632,9 @@ static void defineVariable(uint8_t global){
     emitBytes(OP_DEFINE_GLOBAL, global);//OP_DEFINE_GLOBAL's like OP_CONSTANT but for declaring global variables
 }
 
+/**
+ * Returns the entire ParseRule for corresponding operation type
+ */
 static ParseRule* getRule(TokenType type){//solely to look up the parser rule
     return &rules[type];
 }
@@ -524,17 +705,6 @@ static void varDeclaration(){
     consume(TOKEN_SEMICOLON, "Expect ';' after variable declaration.");
 
     defineVariable(global);
-    //the const are stored with OP_CONST
-    /*
-    so for var a = 1+1*2;
-    OP_CONST 1
-    OP_CONST 1
-    OP_CONST 2
-    OP_STAR
-    OP_ADD
-    OP_DEFINE_GLOBAL a
-    
-    */
 }
 /**
  * Parses expression statements (expression + ;), emits OP_POP upon successful parsing or error for semicolen missing
@@ -577,7 +747,7 @@ static void synchronize(){
     while(parser.current.type != TOKEN_EOF){
         if (parser.previous.type == TOKEN_SEMICOLON) return;
     }
-
+    
     switch(parser.current.type){
         case TOKEN_CLASS:
         case TOKEN_FUN:
@@ -623,9 +793,9 @@ static void statement(){
         printStatement();
     }
     else if (match(TOKEN_LEFT_BRACE)){
-        beginScope();
+        beginScope();//increases current->scopeDepth by +1
         block();
-        endScope();
+        endScope();//decreases current->scopeDepth by -1
     }
     else{
         expressionStatement();

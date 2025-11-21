@@ -6,6 +6,17 @@
 #include "value.h"
 
 #define INIT_STACK 256
+
+/**
+ * This is where the entire data from source code gets evaluated
+ * Chunk stores the bytecodes from compiler
+ * ip points to any one memory point in chunk->code, for bytecode execution
+ * stack_size -> capacite of the vm stack
+ * stack_count -> current count of bytecode in the stack
+ * globals -> hashtable with all the globals
+ * strings -> hashtable with all the OBJ_STRINGs
+ * object -> head of the obj list for GC
+ */
 typedef struct{
     Chunk* chunk;
     uint8_t* ip;//pointer for where we are currently at in the bytecode instructions
@@ -19,6 +30,9 @@ typedef struct{
     Obj* objects;//head of the obj list for garbage collection
 }VM;
 
+/**
+ * End output of the bytecode vm
+ */
 typedef enum{
     INTERPRET_OK,
     INTERPRET_COMPILE_ERROR,
