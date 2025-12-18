@@ -59,7 +59,7 @@ static void adjustCapacity(Table* table, int capacity){
     }
     table->count = 0;//to keep track of new table count as we will not be including tombstones here
     for(int i = 0; i < table->capacity; i++){//finding new destination for all key value pairs in the new hash table
-        Entry* entry = table->entries;
+        Entry* entry = &table->entries[i];
         if(entry->key == NULL) continue;//tombstones ignored
 
         Entry* dest = findEntry(entries, capacity,entry->key);
@@ -125,5 +125,22 @@ ObjString* tableFindString(Table* table, const char* chars, int length, uint32_t
         }
 
         index = (index + 1) % table->capacity;
+    }
+}
+
+void tableRemoveWhite(Table* table){
+    for(int i = 0; i < table->capacity; i++){
+        Entry* entry = &table->entries[i];
+        if(entry->key != NULL && !entry->key->obj.isMarked){
+            tableDelete(table, entry->key);
+        }
+    }
+}
+
+void markTable(Table* table){
+    for(int i = 0; i < table->capacity; i++){
+        Entry* entry = &table->entries[i];
+        markObject((Obj*)entry->key);
+        markValue(entry->value);
     }
 }

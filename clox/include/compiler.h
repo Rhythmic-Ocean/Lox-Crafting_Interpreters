@@ -6,6 +6,7 @@
 #include "vm.h"
 
 extern int a;
-bool compile(const char* source, Chunk* chunk);
+ObjFunction* compile(const char* source);
+void markCompilerRoots();
 
 #endif

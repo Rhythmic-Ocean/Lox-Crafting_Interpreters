@@ -1,11 +1,20 @@
 #ifndef clox_vm_h
 #define clox_vm_h
 
+#include "object.h"
 #include "chunk.h"
 #include "table.h"
 #include "value.h"
 
 #define INIT_STACK 256
+#define FRAMES_MAX 64
+#define STACK_MAX (FRAME_MAX * UINT8_COUNT)
+
+typedef struct{
+    ObjClosure* closure;
+    uint8_t* ip;
+    int slots;
+}CallFrame;
 
 /**
  * This is where the entire data from source code gets evaluated
@@ -18,16 +27,20 @@
  * object -> head of the obj list for GC
  */
 typedef struct{
-    Chunk* chunk;
-    uint8_t* ip;//pointer for where we are currently at in the bytecode instructions
-    //ip = instruction pointer
-    //JVM calls it PC
+    CallFrame frames[FRAMES_MAX];
+    int frameCount;
     int stack_size;
     int stack_count;
     Value* stack;
     Table globals;
     Table strings;
-    Obj* objects;//head of the obj list for garbage collection
+    ObjUpvalue* openUpvalues; //head of the linked list storing all the open upvalues
+    size_t bytesAllocated;//number of bytes the vm manages
+    size_t nextGC;//the threashold on bytes where the GC starts up
+    Obj* objects;//head of the obj list for garbage collection, has every single object ever created
+    int grayCount;
+    int grayCapacity;
+    Obj** grayStack;
 }VM;
 
 /**

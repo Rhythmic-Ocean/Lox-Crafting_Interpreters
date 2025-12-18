@@ -1,0 +1,3 @@
+function hello(){
+    printf("It's been good!");
+  }

@@ -12,6 +12,11 @@
         "ranges": "c",
         "span": "c",
         "vm.h": "c",
-        "algorithm": "c"
+        "algorithm": "c",
+        "charconv": "c",
+        "optional": "c",
+        "system_error": "c",
+        "functional": "c",
+        "tuple": "c"
     }
 }

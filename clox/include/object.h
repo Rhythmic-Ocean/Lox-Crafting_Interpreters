@@ -1,44 +1,133 @@
 #ifndef clox_object_h
 #define clox_object_h
 
+#include "chunk.h"
 #include "common.h"
+#include "table.h"
 #include "value.h"
 
-#define OBJ_TYPE(value)     (AS_OBJ(value)->type)
+#define OBJ_TYPE(value) (AS_OBJ(value)->type)
 
-#define IS_STRING(value)    isObjType(value, OBJ_STRING)
+#define IS_BOUND_METHOD(value) isObjType(value, OBJ_BOUND_METHOD)
+#define IS_CLASS(value) isObjType(value, OBJ_CLASS)
+#define IS_CLOSURE(value) isObjType(value, OBJ_CLOSURE)
+#define IS_FUNCTION(value) isObjType(value, OBJ_FUNCTION)
+#define IS_INSTANCE(value) isObjType(value, OBJ_INSTANCE)
+#define IS_NATIVE(value) isObjType(value, OBJ_NATIVE)
+#define IS_STRING(value) isObjType(value, OBJ_STRING)
 
-#define AS_STRING(value)     ((ObjString*)AS_OBJ(value))//returns pointer to ObjString type
-#define AS_CSTRING(value)    (((ObjString*)AS_OBJ(value))->chars)//returns the string array itself
+#define AS_BOUND_METHOD(value) ((ObjBoundMethod *)AS_OBJ(value))
+#define AS_CLASS(value) ((ObjClass *)AS_OBJ(value))
+#define AS_CLOSURE(value) ((ObjClosure *)AS_OBJ(value))
+#define AS_FUNCTION(value) ((ObjFunction *)AS_OBJ(value))
+#define AS_INSTANCE(value) ((ObjInstance *)AS_OBJ(value))
+#define AS_NATIVE(value) (((ObjNative *)AS_OBJ(value))->function)
+#define AS_STRING(value)                                                       \
+  ((ObjString *)AS_OBJ(value)) // returns pointer to ObjString type
+#define AS_CSTRING(value)                                                      \
+  (((ObjString *)AS_OBJ(value))->chars) // returns the string array itself
 
-typedef enum{
-    OBJ_STRING
-}ObjType;
+typedef enum {
+  OBJ_BOUND_METHOD,
+  OBJ_CLASS,
+  OBJ_CLOSURE,
+  OBJ_FUNCTION,
+  OBJ_INSTANCE,
+  OBJ_NATIVE,
+  OBJ_STRING,
+  OBJ_UPVALUE,
+} ObjType;
 
-struct Obj{
-    ObjType type;
-    struct Obj* next;
+struct Obj {
+  ObjType type;
+  bool isMarked;
+  struct Obj *next;
 };
 
-struct ObjString{
-    Obj obj;
-    int length;
-    char* chars;
-    uint32_t hash;
-};//now Obj is like super sturct
-/* you can do 
+/**
+ * NOTE:Functions are first class in Lox, ie they can be called
+ * passed as arguments, created dynamically (no need top lvl declar
+ * like C) and returned. So we need it to be Lox Object
+ */
+typedef struct {
+  Obj obj;
+  int arity;
+  int upvalueCount;
+  Chunk chunk;
+  ObjString *name;
+} ObjFunction;
+
+typedef Value (*NativeFn)(int argCount, Value *args);
+
+typedef struct {
+  Obj obj;
+  NativeFn function;
+} ObjNative;
+
+struct ObjString {
+  Obj obj;
+  int length;
+  char *chars;
+  uint32_t hash;
+}; // now Obj is like super sturct
+/* you can do
 ObjString* s = ...;
 Obj* base = (Obj*)s;
 */
 
-ObjString* takeString(char* chars, int length);
+typedef struct ObjUpvalue {
+  Obj obj;
+  Value *location;
+  Value closed;
+  struct ObjUpvalue *next;
+} ObjUpvalue;
 
-ObjString* copyString(const char* chars,int length);
+typedef struct {
+  Obj obj;
+  ObjFunction *function;
+  ObjUpvalue *
+      *upvalues; // double pointer, cuz we need ObjUpvalue in the heap with all
+                 // closures pointing at the same ObjUpvalue in the memory so
+                 // everyone's updated if it's Value ever changes
+  int upvalueCount;
+} ObjClosure;
+
+typedef struct {
+  Obj obj;
+  ObjString *name;
+  Table methods;
+} ObjClass;
+
+typedef struct {
+  Obj obj;
+  ObjClass *klass;
+  Table fields;
+} ObjInstance;
+
+typedef struct {
+  Obj obj;
+  Value receiver;
+  ObjClosure *method;
+} ObjBoundMethod;
+
+ObjBoundMethod *newBoundMethod(Value receiver, ObjClosure *method);
+ObjClass *newClass(ObjString *name);
+ObjClosure *newClosure(ObjFunction *function);
+ObjFunction *newFunction();
+ObjInstance *newInstance(ObjClass *klass);
+ObjNative *newNative(NativeFn function);
+ObjString *takeString(char *chars, int length);
+
+ObjString *copyString(const char *chars, int length);
+ObjUpvalue *newUpvalue(Value *slot);
 void printObject(Value value);
 
-static inline bool isObjType(Value value, ObjType type){
-    return IS_OBJ(value) && AS_OBJ(value)->type == type;
-}//here we did not put the fnc body inside the macro cuz the body uses "value" twice
-//So if the first operation to the parameter (say if value was a function is pop()) has some sideeffect, it will be unintentionally executed twice causing problems
+static inline bool isObjType(Value value, ObjType type) {
+  return IS_OBJ(value) && AS_OBJ(value)->type == type;
+} // here we did not put the fnc body inside the macro cuz the body uses "value"
+  // twice
+// So if the first operation to the parameter (say if value was a function is
+// pop()) has some sideeffect, it will be unintentionally executed twice causing
+// problems
 
 #endif
