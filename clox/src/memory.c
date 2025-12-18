@@ -12,7 +12,6 @@
 #include "vm.h"
 
 #ifdef DEBUG_LOG_GC
-#include "debug.h"
 #include <stdio.h>
 #endif
 
@@ -75,7 +74,7 @@ void markObject(Obj *object) {
 
 // We only worry about heap allocated values i.e objects
 void markValue(Value value) {
-  if ((IS_OBJ(value)))
+  if (IS_OBJ(value))
     markObject(AS_OBJ(value));
 }
 
@@ -115,11 +114,12 @@ static void blackenObject(Obj *object) {
     }
     break;
   }
-  case OBJ_FUNCTION:
+  case OBJ_FUNCTION: {
     ObjFunction *fn = (ObjFunction *)object;
     markObject((Obj *)fn->name);
     markArray(&fn->chunk.constants);
     break;
+  }
   case OBJ_INSTANCE: {
     ObjInstance *instance = (ObjInstance *)object;
     markObject((Obj *)instance->klass);
@@ -199,6 +199,7 @@ static void markRoots() {
   }
   markTable(&vm.globals);
   markCompilerRoots();
+  markObject((Obj *)vm.initString);
 }
 
 static void traceReferences() {

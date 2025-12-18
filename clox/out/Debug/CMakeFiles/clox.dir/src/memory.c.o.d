@@ -39,9 +39,7 @@ CMakeFiles/clox.dir/src/memory.c.o: \
  /home/rhythmic_ocean/Desktop/lox/clox/include/vm.h \
  /home/rhythmic_ocean/Desktop/lox/clox/include/memory.h \
  /home/rhythmic_ocean/Desktop/lox/clox/include/object.h \
- /home/rhythmic_ocean/Desktop/lox/clox/include/vm.h \
- /home/rhythmic_ocean/Desktop/lox/clox/include/debug.h \
- /usr/include/stdio.h \
+ /home/rhythmic_ocean/Desktop/lox/clox/include/vm.h /usr/include/stdio.h \
  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdarg.h \
  /usr/include/bits/types/__fpos_t.h /usr/include/bits/types/__mbstate_t.h \
  /usr/include/bits/types/__fpos64_t.h /usr/include/bits/types/__FILE.h \
